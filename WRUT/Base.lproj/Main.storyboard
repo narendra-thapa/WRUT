@@ -3,10 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--WRUT-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
@@ -124,7 +126,7 @@
                             <constraint firstItem="zTK-99-FHw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rlo-eg-3bg"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Ggs-Lm-qjF">
+                    <navigationItem key="navigationItem" title="WRUT" id="Ggs-Lm-qjF">
                         <barButtonItem key="leftBarButtonItem" title="Profile" id="iea-2y-8f4">
                             <connections>
                                 <segue destination="r0J-PU-8Zg" kind="show" id="mcP-jF-mwG"/>
@@ -141,10 +143,10 @@
             </objects>
             <point key="canvasLocation" x="1137" y="387"/>
         </scene>
-        <!--View Controller-->
+        <!--Set Profile-->
         <scene sceneID="kdk-Aw-hmA">
             <objects>
-                <viewController id="r0J-PU-8Zg" sceneMemberID="viewController">
+                <viewController id="r0J-PU-8Zg" customClass="ProfileViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RAe-Wv-dvP"/>
                         <viewControllerLayoutGuide type="bottom" id="q5O-ei-HhJ"/>
@@ -153,50 +155,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HHv-Py-EVL">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="80" y="88" width="240" height="240"/>
-                                </variation>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LBH-te-Eec">
+                                <rect key="frame" x="200" y="140" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="F5h-la-V6v"/>
+                                    <constraint firstAttribute="height" constant="200" id="z6h-zE-MEj"/>
+                                </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KUk-Qg-Oz1">
-                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="epL-ZI-Eyj">
+                                <rect key="frame" x="20" y="380" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="llD-bU-PbU"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="352" width="360" height="30"/>
-                                </variation>
+                                <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMV-sY-9nG">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Save"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="177" y="423" width="46" height="30"/>
-                                </variation>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="epL-ZI-Eyj" secondAttribute="trailing" id="3ZP-G5-IIk"/>
+                            <constraint firstItem="LBH-te-Eec" firstAttribute="centerY" secondItem="YQU-Sx-oGD" secondAttribute="centerY" multiplier="0.8" id="DIk-CI-ave"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="epL-ZI-Eyj" secondAttribute="leading" id="XPw-5P-Wz0"/>
+                            <constraint firstItem="epL-ZI-Eyj" firstAttribute="centerX" secondItem="YQU-Sx-oGD" secondAttribute="centerX" id="adO-JV-TFd"/>
+                            <constraint firstItem="epL-ZI-Eyj" firstAttribute="top" secondItem="LBH-te-Eec" secondAttribute="bottom" constant="40" id="gv7-Bn-4Yr"/>
+                            <constraint firstItem="LBH-te-Eec" firstAttribute="centerY" secondItem="RAe-Wv-dvP" secondAttribute="bottom" constant="40" id="pgO-8G-4rb"/>
+                            <constraint firstItem="LBH-te-Eec" firstAttribute="centerX" secondItem="YQU-Sx-oGD" secondAttribute="centerX" id="y2F-NM-ewg"/>
+                        </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="HHv-Py-EVL"/>
-                                <exclude reference="KUk-Qg-Oz1"/>
-                                <exclude reference="TMV-sY-9nG"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="HHv-Py-EVL"/>
-                                <include reference="KUk-Qg-Oz1"/>
-                                <include reference="TMV-sY-9nG"/>
+                            <mask key="constraints">
+                                <exclude reference="pgO-8G-4rb"/>
+                                <exclude reference="adO-JV-TFd"/>
                             </mask>
                         </variation>
                     </view>
                     <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Set Profile" id="bH9-oa-vod">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="QWK-PZ-A4A">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="r0J-PU-8Zg" id="xh1-vs-eat"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="profileImageView" destination="LBH-te-Eec" id="kE3-E8-vbZ"/>
+                        <outlet property="profileNameField" destination="epL-ZI-Eyj" id="Tnx-hP-Sdn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="siz-E1-yor" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912.5" y="-250"/>
+            <point key="canvasLocation" x="1912" y="-250"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8p5-6g-Ujd">
