@@ -14,6 +14,7 @@ protocol ConnectionServiceManagerDelegate {
     func invitationWasReceived(fromPeer: String)
     func connectedWithPeer(peerID: MCPeerID)
     func updatePlayerList()
+    func leftCurrentGroup()
     
 //    func connectedDevicesChanged(manager : ConnectionManager, connectedDevices: [String])
 //    func colorChanged(manager : ConnectionManager, colorString: String)
@@ -169,7 +170,7 @@ extension ConnectionManager : MCSessionDelegate {
                     self.updatePlayerCollection() }
                 else {
                     self.connectedList.removeAll()
-                    self.delegate?.updatePlayerList()
+                    self.delegate?.leftCurrentGroup()
                 }
             })
             

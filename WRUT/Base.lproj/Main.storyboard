@@ -168,6 +168,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="eMq-6Z-8Cx" id="SIh-eP-K36"/>
+                        <outlet property="inviteButton" destination="zTK-99-FHw" id="pQr-tK-E76"/>
                         <outlet property="statusBarButton" destination="QY0-iQ-du3" id="wUk-pG-R2B"/>
                         <outlet property="statusView" destination="JKI-Bi-TkX" id="6BL-vD-31T"/>
                         <outlet property="updatesMPCollectionView" destination="EcA-eS-pXn" id="UoQ-pC-HGB"/>
@@ -239,7 +240,7 @@
             </objects>
             <point key="canvasLocation" x="1912" y="-250"/>
         </scene>
-        <!--Select Player View Controller-->
+        <!--Create Group-->
         <scene sceneID="U3M-if-Knl">
             <objects>
                 <viewController id="GmP-rM-Cg3" customClass="SelectPlayerViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
@@ -264,6 +265,48 @@
                                     <rect key="frame" x="148" y="95" width="104" height="21"/>
                                 </variation>
                             </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y1H-bt-L55">
+                                <rect key="frame" x="20" y="139" width="560" height="70"/>
+                                <color key="backgroundColor" red="0.8205882874" green="1" blue="0.78737866499999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="Hm9-p4-Sxy"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hVu-v8-RaP">
+                                    <size key="itemSize" width="161" height="62"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playerCollectionCell" id="Nc4-IT-kB3" customClass="PlayerCollectionCell" customModule="WRUT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="4" width="161" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="161" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PlayerName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n8a-ju-Rb6">
+                                                    <rect key="frame" x="8" y="20" width="145" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="playerName" destination="n8a-ju-Rb6" id="gJO-j6-Ak8"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="20" y="135" width="360" height="70"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="GmP-rM-Cg3" id="Ofz-e9-Pbw"/>
+                                    <outlet property="delegate" destination="GmP-rM-Cg3" id="j5h-v3-894"/>
+                                </connections>
+                            </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKl-Y3-m1H">
                                 <rect key="frame" x="275" y="229" width="50" height="25"/>
                                 <constraints>
@@ -312,48 +355,6 @@
                                     <outlet property="delegate" destination="GmP-rM-Cg3" id="J4D-zR-27M"/>
                                 </connections>
                             </tableView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y1H-bt-L55">
-                                <rect key="frame" x="20" y="139" width="560" height="70"/>
-                                <color key="backgroundColor" red="0.8205882874" green="1" blue="0.78737866499999998" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="Hm9-p4-Sxy"/>
-                                </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hVu-v8-RaP">
-                                    <size key="itemSize" width="161" height="62"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="playerCollectionCell" id="Nc4-IT-kB3" customClass="PlayerCollectionCell" customModule="WRUT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="4" width="161" height="62"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="161" height="62"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PlayerName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n8a-ju-Rb6">
-                                                    <rect key="frame" x="8" y="20" width="145" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <connections>
-                                            <outlet property="playerName" destination="n8a-ju-Rb6" id="gJO-j6-Ak8"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="20" y="135" width="360" height="70"/>
-                                </variation>
-                                <connections>
-                                    <outlet property="dataSource" destination="GmP-rM-Cg3" id="Ofz-e9-Pbw"/>
-                                    <outlet property="delegate" destination="GmP-rM-Cg3" id="j5h-v3-894"/>
-                                </connections>
-                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -376,6 +377,14 @@
                             </mask>
                         </variation>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Create Group" id="QkP-Sz-gjG">
+                        <barButtonItem key="rightBarButtonItem" title="Start Game" id="iOg-ok-rBW">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="r0J-PU-8Zg" id="WhM-UK-guf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Y1H-bt-L55" id="T7g-d6-FVB"/>
                         <outlet property="tableView" destination="2cq-HH-sjc" id="YV7-wZ-aNW"/>

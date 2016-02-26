@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var inviteButton: UIButton!
+    
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     let connectionService = ConnectionManager()
@@ -102,12 +104,20 @@ extension ViewController : ConnectionServiceManagerDelegate {
         self.collectionView.reloadData()
     }
     
+    func leftCurrentGroup() {
+        print("Left current group")
+        self.inviteButton.enabled = true
+        self.collectionView.reloadData()
+    }
+    
     
     
     func invitationWasReceived(fromPeer: String) {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to play with you.", preferredStyle: UIAlertControllerStyle.Alert)
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            self.inviteButton.enabled = false
+            self.navigationController?.popToRootViewControllerAnimated(true)
             self.appDelegate.connectionManager.invitationHandlers(true, self.appDelegate.connectionManager.session)
         }
         
