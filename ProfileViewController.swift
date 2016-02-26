@@ -10,6 +10,8 @@ import UIKit
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileNameField: UITextField!
 
@@ -20,6 +22,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         imagePicker.delegate = self
         profileNameField.delegate = self
+        
+        // Setting initial value
+        if let profileImage = defaults.objectForKey("Image") as? NSData {
+            self.profileImageView.image = UIImage(data: profileImage)
+        }
+        self.profileNameField.text = defaults.objectForKey("Name") as? String
         
         // Making image view circular
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
@@ -32,16 +40,20 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
 
-        //Keyboard Handling
+        // Keyboard Handling
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
         
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
+    }
+    
     func keyboardWillHide(sender: NSNotification) {
         if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-            print("keyboard will hide")
-            self.view.frame.origin.y += keyboardSize.height - 120}
+            self.view.frame.origin.y += keyboardSize.height - 130}
     }
     
     func keyboardWillShow(sender: NSNotification) {
@@ -53,23 +65,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         if keyboardSize.height == offset.height {
             if self.view.frame.origin.y == 0 {
                 UIView.animateWithDuration(0.1, animations: { () -> Void in
-                    self.view.frame.origin.y -= keyboardSize.height - 120})
+                    self.view.frame.origin.y -= keyboardSize.height - 130})
             }
         } else {
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 self.view.frame.origin.y += keyboardSize.height - offset.height })
         }
-        print(self.view.frame.origin.y)
     }
-    
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.profileNameField.resignFirstResponder()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: self.view.window)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: self.view.window)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -81,13 +86,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.allowsEditing = true
         imagePicker.sourceType = .PhotoLibrary
         presentViewController(imagePicker, animated: true, completion: nil)
-        //presentViewController(imagePicker, animated: true) { () -> Void in }
     }
     
     @IBAction func saveButtonPressed(sender: UIBarButtonItem) {
+        // Save profile to NSuser Defaults
+        defaults.setObject(self.profileNameField.text, forKey: "Name")
+        let imageAsData = UIImagePNGRepresentation(self.profileImageView.image!)
+            defaults.setObject(imageAsData, forKey: "Image")
         
-        // need to save profile to NSuser Defaults
-        
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
