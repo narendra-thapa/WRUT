@@ -11,11 +11,12 @@ import MultipeerConnectivity
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var playerListCollectionView: UICollectionView!
     @IBOutlet weak var updatesMPCollectionView: UICollectionView!
     
     @IBOutlet weak var statusBarButton: UIBarButtonItem!
     @IBOutlet weak var statusView: UIView!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -69,6 +70,23 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController : UICollectionViewDataSource {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return appDelegate.connectionManager.connectedList.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("connectedCollectionCell", forIndexPath: indexPath) as! ConnectedCollectionCell
+        cell.connectedPlayerCell.text = appDelegate.connectionManager.connectedList[indexPath.row].displayName
+        return cell
+    }
+}
+
 extension ViewController : ConnectionServiceManagerDelegate {
     
     func foundPeer() {
@@ -78,6 +96,13 @@ extension ViewController : ConnectionServiceManagerDelegate {
     func lostPeer() {
         print("Lost Peer in main view controller")
     }
+    
+    func updatePlayerList() {
+        print("Updating connected List")
+        self.collectionView.reloadData()
+    }
+    
+    
     
     func invitationWasReceived(fromPeer: String) {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to play with you.", preferredStyle: UIAlertControllerStyle.Alert)

@@ -13,10 +13,10 @@ protocol ConnectionServiceManagerDelegate {
     
     func invitationWasReceived(fromPeer: String)
     func connectedWithPeer(peerID: MCPeerID)
+    func updatePlayerList()
     
 //    func connectedDevicesChanged(manager : ConnectionManager, connectedDevices: [String])
 //    func colorChanged(manager : ConnectionManager, colorString: String)
-//    
 //    func textReceived(manager : ConnectionManager, textReceived: String)
 //    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String)
     
@@ -41,6 +41,7 @@ class ConnectionManager : NSObject {
     
     var foundPeers = [MCPeerID]()
     var connectedDevices = [MCPeerID]()
+    var connectedList = [MCPeerID]()
     
     var invitationHandlers: ((Bool, MCSession)->Void) = { success, session in }
     
@@ -54,6 +55,7 @@ class ConnectionManager : NSObject {
         super.init()
         
         myPeerId = MCPeerID(displayName: UIDevice.currentDevice().name)
+        //connectedDevices.append(myPeerId)
         
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ConnectionServiceType)
         self.serviceBrowser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: ConnectionServiceType)
@@ -71,6 +73,26 @@ class ConnectionManager : NSObject {
     deinit {
         //self.serviceAdvertiser.stopAdvertisingPeer()
         //self.serviceBrowser.stopBrowsingForPeers()
+    }
+    
+    func updatePlayerCollection() {
+        if self.connectedDevices.count > 0 {
+            connectedList.removeAll()
+            connectedList.append(myPeerId)
+            for MCPeerID in self.connectedDevices {
+                connectedList.append(MCPeerID)
+            }
+            let sendDict: NSDictionary = ["playerList":connectedList]
+            let myData = NSKeyedArchiver.archivedDataWithRootObject(sendDict)
+            do {
+                try self.session.sendData(myData, toPeers: self.connectedDevices,
+                    withMode: MCSessionSendDataMode.Unreliable)
+                print("Successfully sent")
+            } catch {
+                // do something.
+                print("Bad quote!")
+            }
+        }
     }
 }
 
@@ -120,8 +142,11 @@ extension ConnectionManager : MCSessionDelegate {
             print("Before-Connected \(self.connectedDevices)")
             self.connectedDevices.append(peerID)
             print("After-Connected \(self.connectedDevices)")
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.playerSelectDelegate?.addPlayer()
+                if self.connectedDevices.count > 0 {
+                    self.updatePlayerCollection() }
             })
             
 
@@ -140,24 +165,35 @@ extension ConnectionManager : MCSessionDelegate {
             print("After-Disconnected \(self.connectedDevices)")
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.playerSelectDelegate?.removePlayer()
+                if self.connectedDevices.count > 0 {
+                    self.updatePlayerCollection() }
+                else {
+                    self.connectedList.removeAll()
+                    self.delegate?.updatePlayerList()
+                }
             })
             
         }
     }
     
     func session(session: MCSession, didReceiveData data: NSData, fromPeer peerID: MCPeerID) {
-        NSLog("%@", "didReceiveData: \(data.length) bytes")
+        print("didReceiveData: \(data.length) bytes")
         print("\(peerID.displayName)")
         
         let myDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSDictionary
         print(myDictionary)
         
-        if let chat = myDictionary["chattext"] as? String {
-          //  self.delegate?.textReceived(self, textReceived: chat)
-            print("\(chat)")
+        if let connectedPlayers = myDictionary["playerList"] as? [MCPeerID] {
+            connectedList.removeAll()
+            connectedList = connectedPlayers
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.delegate?.updatePlayerList()
+                print("Updated List received")
+            })
+            
         } else if let drawing = myDictionary["drawing"] as? UIImage {
             let instance = myDictionary["first"] as? String
-          //  self.delegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
+
             print("\(instance, drawing)")
         }
     }

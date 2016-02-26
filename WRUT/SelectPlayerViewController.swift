@@ -43,7 +43,6 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
         
         appDelegate.connectionManager.serviceBrowser.invitePeer(selectedPeer, toSession: appDelegate.connectionManager.session, withContext: nil, timeout: 10)
     }
-
 }
 
 extension SelectPlayerViewController : UICollectionViewDataSource {
@@ -85,6 +84,8 @@ extension SelectPlayerViewController : CSMPlayerSelectDelegate {
         print("Remove Player")
         self.collectionView.reloadData()
     }
+    
+
     
 //    func invitationWasReceived(fromPeer: String) {
 //        let alert = UIAlertController(title: "", message: "\(fromPeer) wants to play with you.", preferredStyle: UIAlertControllerStyle.Alert)
