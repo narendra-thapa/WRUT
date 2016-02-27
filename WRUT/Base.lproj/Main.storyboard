@@ -126,7 +126,7 @@
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JKI-Bi-TkX">
                                 <rect key="frame" x="540" y="74" width="30" height="30"/>
-                                <color key="backgroundColor" red="0.90812867879867554" green="0.62530869245529175" blue="0.38360649347305298" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="2Or-9d-N42"/>
                                     <constraint firstAttribute="height" constant="30" id="iff-Kc-3sh"/>

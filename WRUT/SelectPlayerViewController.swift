@@ -40,7 +40,8 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedPeer = appDelegate.connectionManager.foundPeers[indexPath.row] as MCPeerID
-        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! OnlineTableCell
+        cell.accessoryType = UITableViewCellAccessoryType.Checkmark
         appDelegate.connectionManager.serviceBrowser.invitePeer(selectedPeer, toSession: appDelegate.connectionManager.session, withContext: nil, timeout: 10)
     }
 }

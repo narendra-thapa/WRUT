@@ -30,6 +30,7 @@ class ViewController: UIViewController {
 
         connectionService.delegate = self
         appDelegate.connectionManager.delegate = self
+        self.inviteButton.enabled = false
         isAdvertising = false
         
         self.statusView.layer.cornerRadius = self.statusView.frame.size.width / 2
@@ -50,12 +51,13 @@ class ViewController: UIViewController {
             if self.isAdvertising == true {
                 self.appDelegate.connectionManager.serviceAdvertiser.stopAdvertisingPeer()
                 self.statusView.backgroundColor = UIColor.redColor()
-                //self.appDelegate.mpcManager.cleanConnectedDevices()
+                self.inviteButton.enabled = false
                 self.appDelegate.connectionManager.session.disconnect()
             }
             else{
                 self.appDelegate.connectionManager.serviceAdvertiser.startAdvertisingPeer()
                 self.statusView.backgroundColor = UIColor.greenColor()
+                self.inviteButton.enabled = true
             }
             self.isAdvertising = !self.isAdvertising
         }
