@@ -48,6 +48,8 @@ class ConnectionManager : NSObject {
     var connectedProfiles = [String]()
     var connectedList = [MCPeerID]()
     
+    var updates = [String]()
+    
     var invitationHandlers: ((Bool, MCSession)->Void) = { success, session in }
     
     var session: MCSession!
@@ -101,6 +103,21 @@ class ConnectionManager : NSObject {
             }
         }
     }
+    
+    func updateTimelineCollection(update: String) {
+        if self.connectedDevices.count > 0 {
+            let sendDict: NSDictionary = ["updates":update]
+            let myData = NSKeyedArchiver.archivedDataWithRootObject(sendDict)
+            do {
+                try self.session.sendData(myData, toPeers: self.connectedDevices,
+                    withMode: MCSessionSendDataMode.Unreliable)
+                print("Successfully sent")
+            } catch {
+                // do something.
+                print("Bad quote!")
+            }
+        }
+    }
 }
 
 
@@ -112,7 +129,8 @@ extension ConnectionManager : MCNearbyServiceAdvertiserDelegate {
     
     func advertiser(advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: NSData?, invitationHandler: ((Bool, MCSession) -> Void)) {
         self.invitationHandlers = invitationHandler
-        delegate?.invitationWasReceived(peerID.displayName)
+        let inviteSenderName = NSKeyedUnarchiver.unarchiveObjectWithData(context!) as? String
+        delegate?.invitationWasReceived(inviteSenderName!)
     }
 }
 
@@ -149,6 +167,8 @@ extension ConnectionManager : MCSessionDelegate {
             print("Before-Connected \(self.connectedDevices)")
             self.connectedDevices.append(peerID)
             
+            self.updates.append("Added to group: \(peerID.displayName)")
+            
             let profileName = self.defaults.objectForKey("Name") as? String
             print("profileName \(profileName)")
             self.connectedProfiles.append(profileName!)
@@ -170,6 +190,9 @@ extension ConnectionManager : MCSessionDelegate {
         default:
             print("Did not connect to session: \(session)")
             print("Lost connection to: \(peerID)")
+            
+            self.updates.append("Left group: \(peerID.displayName)")
+            
             print("Before-Disconnected \(self.connectedDevices)")
             for (index, aPeer) in  EnumerateSequence(connectedDevices){
                 if aPeer == peerID {
@@ -211,8 +234,13 @@ extension ConnectionManager : MCSessionDelegate {
             
         } else if let drawing = myDictionary["drawing"] as? UIImage {
             let instance = myDictionary["first"] as? String
-
             print("\(instance, drawing)")
+            
+        } else if let newUpdate = myDictionary["updates"] as? String {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.updates.append(newUpdate)
+                self.delegate?.updatePlayerList()
+            })
         }
     }
     

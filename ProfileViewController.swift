@@ -26,8 +26,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Setting initial value
         if let profileImage = defaults.objectForKey("Image") as? NSData {
             self.profileImageView.image = UIImage(data: profileImage)
+        } else {
+            self.profileImageView.image = UIImage(imageLiteral: "Planet.jpg")
         }
-        self.profileNameField.text = defaults.objectForKey("Name") as? String
+        if let profileName = defaults.objectForKey("Name") as? String {
+            self.profileNameField.text = profileName
+        }
         
         // Making image view circular
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2

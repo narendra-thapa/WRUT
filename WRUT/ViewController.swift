@@ -25,7 +25,8 @@ class ViewController: UIViewController {
     let connectionService = ConnectionManager()
     var isAdvertising: Bool!
     
-    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var profileName = String()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +36,15 @@ class ViewController: UIViewController {
         self.inviteButton.enabled = false
         isAdvertising = false
         
+        if let userName = self.defaults.objectForKey("Name") as? String {
+            self.profileName = userName
+        }
         
         self.statusView.layer.cornerRadius = self.statusView.frame.size.width / 2
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
     }
     
     @IBAction func toggleAdvertising(sender: UIBarButtonItem) {
@@ -92,16 +100,30 @@ extension ViewController : UICollectionViewDataSource {
         let numberOfPlayers = appDelegate.connectionManager.connectedList.count
         if numberOfPlayers == 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == true {
             inviteButton.enabled = true
+            print("1st case")
+        } else if numberOfPlayers > 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == false {
+            inviteButton.enabled = true
+            print("2nd case")
         } else {
             inviteButton.enabled = false
+            print("3rd case \(numberOfPlayers) \(isAdvertising) \(self.appDelegate.connectionManager.acceptance)")
         }
+        
+        if collectionView == self.collectionView {
         return appDelegate.connectionManager.connectedList.count
+        }
+        return appDelegate.connectionManager.updates.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        if collectionView == self.collectionView {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("connectedCollectionCell", forIndexPath: indexPath) as! ConnectedCollectionCell
         cell.connectedPlayerCell.text = appDelegate.connectionManager.connectedList[indexPath.row].displayName
         return cell
+        }
+        let updateCell = collectionView.dequeueReusableCellWithReuseIdentifier("updateCollectionCell", forIndexPath: indexPath) as! UpdatesCollectionCell
+        updateCell.updatesCellField.text = appDelegate.connectionManager.updates[indexPath.row]
+        return updateCell
     }
 }
 
@@ -118,24 +140,25 @@ extension ViewController : ConnectionServiceManagerDelegate {
     func updatePlayerList() {
         print("Updating connected List")
         self.collectionView.reloadData()
+        self.updatesMPCollectionView.reloadData()
     }
     
     func leftCurrentGroup() {
         print("Left current group")
     //    self.inviteButton.enabled = true
         self.collectionView.reloadData()
+        self.updatesMPCollectionView.reloadData()
     }
-    
     
     
     func invitationWasReceived(fromPeer: String) {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to play with you.", preferredStyle: UIAlertControllerStyle.Alert)
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
-            self.inviteButton.enabled = false
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            //self.inviteButton.enabled = false
             self.appDelegate.connectionManager.invitationHandlers(true, self.appDelegate.connectionManager.session)
             self.appDelegate.connectionManager.acceptance = true
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
         
         let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in

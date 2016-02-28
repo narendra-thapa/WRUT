@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		48E30BB51C7FB23400C86272 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BB41C7FB23400C86272 /* ProfileViewController.swift */; };
-		48E30BB71C7FB2EA00C86272 /* RPMDial.png in Resources */ = {isa = PBXBuildFile; fileRef = 48E30BB61C7FB2EA00C86272 /* RPMDial.png */; };
-		48E30BB91C7FB71800C86272 /* vintage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48E30BB81C7FB71800C86272 /* vintage.jpg */; };
 		48E30BBB1C80B7C900C86272 /* SelectPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BBA1C80B7C900C86272 /* SelectPlayerViewController.swift */; };
 		48E30BBD1C80B86400C86272 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BBC1C80B86400C86272 /* ConnectionManager.swift */; };
 		48E30BBF1C80CC0900C86272 /* OnlineTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BBE1C80CC0900C86272 /* OnlineTableCell.swift */; };
 		48E30BC11C80E0D200C86272 /* PlayerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BC01C80E0D200C86272 /* PlayerCollectionCell.swift */; };
 		48E30BC31C80EA2400C86272 /* ConnectedCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BC21C80EA2400C86272 /* ConnectedCollectionCell.swift */; };
+		48E30BC71C82896400C86272 /* Planet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48E30BC61C82896400C86272 /* Planet.jpg */; };
+		48E30BCB1C835D1800C86272 /* UpdatesCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BCA1C835D1800C86272 /* UpdatesCollectionCell.swift */; };
+		48E30BCD1C83689100C86272 /* ChooseGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BCC1C83689100C86272 /* ChooseGameViewController.swift */; };
 		48F6051F1C7F6E9E003056D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F6051E1C7F6E9E003056D3 /* AppDelegate.swift */; };
 		48F605211C7F6E9E003056D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F605201C7F6E9E003056D3 /* ViewController.swift */; };
 		48F605241C7F6E9E003056D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48F605221C7F6E9E003056D3 /* Main.storyboard */; };
@@ -24,13 +25,14 @@
 
 /* Begin PBXFileReference section */
 		48E30BB41C7FB23400C86272 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = ../ProfileViewController.swift; sourceTree = "<group>"; };
-		48E30BB61C7FB2EA00C86272 /* RPMDial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RPMDial.png; sourceTree = "<group>"; };
-		48E30BB81C7FB71800C86272 /* vintage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vintage.jpg; sourceTree = "<group>"; };
 		48E30BBA1C80B7C900C86272 /* SelectPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectPlayerViewController.swift; sourceTree = "<group>"; };
 		48E30BBC1C80B86400C86272 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		48E30BBE1C80CC0900C86272 /* OnlineTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTableCell.swift; sourceTree = "<group>"; };
 		48E30BC01C80E0D200C86272 /* PlayerCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerCollectionCell.swift; sourceTree = "<group>"; };
 		48E30BC21C80EA2400C86272 /* ConnectedCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectedCollectionCell.swift; sourceTree = "<group>"; };
+		48E30BC61C82896400C86272 /* Planet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Planet.jpg; path = ../Planet.jpg; sourceTree = "<group>"; };
+		48E30BCA1C835D1800C86272 /* UpdatesCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesCollectionCell.swift; sourceTree = "<group>"; };
+		48E30BCC1C83689100C86272 /* ChooseGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseGameViewController.swift; sourceTree = "<group>"; };
 		48F6051B1C7F6E9E003056D3 /* WRUT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WRUT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F6051E1C7F6E9E003056D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48F605201C7F6E9E003056D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,12 +78,13 @@
 				48E30BBC1C80B86400C86272 /* ConnectionManager.swift */,
 				48E30BB41C7FB23400C86272 /* ProfileViewController.swift */,
 				48E30BBA1C80B7C900C86272 /* SelectPlayerViewController.swift */,
+				48E30BCC1C83689100C86272 /* ChooseGameViewController.swift */,
 				48E30BBE1C80CC0900C86272 /* OnlineTableCell.swift */,
 				48E30BC01C80E0D200C86272 /* PlayerCollectionCell.swift */,
+				48E30BCA1C835D1800C86272 /* UpdatesCollectionCell.swift */,
 				48F605221C7F6E9E003056D3 /* Main.storyboard */,
 				48F605251C7F6E9E003056D3 /* Assets.xcassets */,
-				48E30BB61C7FB2EA00C86272 /* RPMDial.png */,
-				48E30BB81C7FB71800C86272 /* vintage.jpg */,
+				48E30BC61C82896400C86272 /* Planet.jpg */,
 				48F605271C7F6E9E003056D3 /* LaunchScreen.storyboard */,
 				48F6052A1C7F6E9E003056D3 /* Info.plist */,
 			);
@@ -148,10 +151,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				48F605291C7F6E9E003056D3 /* LaunchScreen.storyboard in Resources */,
-				48E30BB91C7FB71800C86272 /* vintage.jpg in Resources */,
 				48F605261C7F6E9E003056D3 /* Assets.xcassets in Resources */,
 				48F605241C7F6E9E003056D3 /* Main.storyboard in Resources */,
-				48E30BB71C7FB2EA00C86272 /* RPMDial.png in Resources */,
+				48E30BC71C82896400C86272 /* Planet.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,9 +169,11 @@
 				48E30BB51C7FB23400C86272 /* ProfileViewController.swift in Sources */,
 				48F605211C7F6E9E003056D3 /* ViewController.swift in Sources */,
 				48E30BBF1C80CC0900C86272 /* OnlineTableCell.swift in Sources */,
+				48E30BCD1C83689100C86272 /* ChooseGameViewController.swift in Sources */,
 				48E30BBB1C80B7C900C86272 /* SelectPlayerViewController.swift in Sources */,
 				48F6051F1C7F6E9E003056D3 /* AppDelegate.swift in Sources */,
 				48E30BC31C80EA2400C86272 /* ConnectedCollectionCell.swift in Sources */,
+				48E30BCB1C835D1800C86272 /* UpdatesCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

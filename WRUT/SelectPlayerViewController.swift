@@ -13,10 +13,14 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var startGameButton: UIBarButtonItem!
+    
+    var userName = NSData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +48,36 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
         let selectedPeer = appDelegate.connectionManager.foundPeers[indexPath.row] as MCPeerID
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! OnlineTableCell
         cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-        appDelegate.connectionManager.serviceBrowser.invitePeer(selectedPeer, toSession: appDelegate.connectionManager.session, withContext: nil, timeout: 10)
-        self.appDelegate.connectionManager.acceptance = true
+        
+        if let profileName = defaults.objectForKey("Name") as? String {
+            if profileName.isEmpty {
+                self.userName = NSKeyedArchiver.archivedDataWithRootObject(appDelegate.connectionManager.myPeerId.displayName)
+                print("displayname: \(appDelegate.connectionManager.myPeerId.displayName)")
+            } else {
+                self.userName = NSKeyedArchiver.archivedDataWithRootObject(profileName)
+                print("profilename: \(profileName)")
+        }
+
+        appDelegate.connectionManager.serviceBrowser.invitePeer(selectedPeer, toSession: appDelegate.connectionManager.session, withContext: self.userName, timeout: 20)
+        }
     }
+    
+    
+    @IBAction func startGameButtonPressed(sender: UIBarButtonItem) {
+        
+        self.performSegueWithIdentifier("chooseGame", sender: self)
+        
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "chooseGame" {
+            //let detailVC = segue.destinationViewController as! ChooseGameViewController
+            let leader = NSKeyedUnarchiver.unarchiveObjectWithData(self.userName) as? String
+            appDelegate.connectionManager.updates.append(leader! + " is starting a Game")
+            appDelegate.connectionManager.updateTimelineCollection(leader! + " is starting a Game")
+        }
+    }
+    
 }
 
 extension SelectPlayerViewController : UICollectionViewDataSource {
