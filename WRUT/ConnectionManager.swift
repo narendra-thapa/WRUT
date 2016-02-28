@@ -40,8 +40,12 @@ class ConnectionManager : NSObject {
     
     var playerSelectDelegate : CSMPlayerSelectDelegate?
     
+    var acceptance: Bool!
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     var foundPeers = [MCPeerID]()
     var connectedDevices = [MCPeerID]()
+    var connectedProfiles = [String]()
     var connectedList = [MCPeerID]()
     
     var invitationHandlers: ((Bool, MCSession)->Void) = { success, session in }
@@ -57,6 +61,8 @@ class ConnectionManager : NSObject {
         
         myPeerId = MCPeerID(displayName: UIDevice.currentDevice().name)
         //connectedDevices.append(myPeerId)
+        
+        self.acceptance = false
         
         self.serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: ConnectionServiceType)
         self.serviceBrowser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: ConnectionServiceType)
@@ -142,6 +148,11 @@ extension ConnectionManager : MCSessionDelegate {
             print("Connected to session: \(session)")
             print("Before-Connected \(self.connectedDevices)")
             self.connectedDevices.append(peerID)
+            
+            let profileName = self.defaults.objectForKey("Name") as? String
+            print("profileName \(profileName)")
+            self.connectedProfiles.append(profileName!)
+            
             print("After-Connected \(self.connectedDevices)")
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -153,6 +164,9 @@ extension ConnectionManager : MCSessionDelegate {
 
         case MCSessionState.Connecting:
             print("Connecting to session: \(session)")
+            let profileName = self.defaults.objectForKey("Name") as? String
+            print("profileName \(profileName)")
+            
         default:
             print("Did not connect to session: \(session)")
             print("Lost connection to: \(peerID)")
@@ -166,12 +180,15 @@ extension ConnectionManager : MCSessionDelegate {
             print("After-Disconnected \(self.connectedDevices)")
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.playerSelectDelegate?.removePlayer()
+                
                 if self.connectedDevices.count > 0 {
                     self.updatePlayerCollection() }
                 else {
                     self.connectedList.removeAll()
                     self.delegate?.leftCurrentGroup()
                 }
+                let profileName = self.defaults.objectForKey("Name") as? String
+                print("profileName \(profileName)")
             })
             
         }

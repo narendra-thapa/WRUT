@@ -387,6 +387,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Y1H-bt-L55" id="T7g-d6-FVB"/>
+                        <outlet property="startGameButton" destination="iOg-ok-rBW" id="9oL-jn-4ck"/>
                         <outlet property="tableView" destination="2cq-HH-sjc" id="YV7-wZ-aNW"/>
                     </connections>
                 </viewController>

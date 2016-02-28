@@ -16,6 +16,8 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var startGameButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +45,7 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! OnlineTableCell
         cell.accessoryType = UITableViewCellAccessoryType.Checkmark
         appDelegate.connectionManager.serviceBrowser.invitePeer(selectedPeer, toSession: appDelegate.connectionManager.session, withContext: nil, timeout: 10)
+        self.appDelegate.connectionManager.acceptance = true
     }
 }
 
@@ -53,6 +56,12 @@ extension SelectPlayerViewController : UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let numberOfPlayers = appDelegate.connectionManager.connectedDevices.count
+        if numberOfPlayers == 0 {
+            startGameButton.enabled = false
+        } else {
+            startGameButton.enabled = true
+        }
         return appDelegate.connectionManager.connectedDevices.count
     }
     

@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     
     let connectionService = ConnectionManager()
     var isAdvertising: Bool!
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,7 @@ class ViewController: UIViewController {
         appDelegate.connectionManager.delegate = self
         self.inviteButton.enabled = false
         isAdvertising = false
+        
         
         self.statusView.layer.cornerRadius = self.statusView.frame.size.width / 2
     }
@@ -42,8 +45,7 @@ class ViewController: UIViewController {
         var actionTitle: String
         if isAdvertising == true {
             actionTitle = "Make me invisible to others"
-        }
-        else{
+        } else {
             actionTitle = "Make me visible to others"
         }
         
@@ -51,18 +53,24 @@ class ViewController: UIViewController {
             if self.isAdvertising == true {
                 self.appDelegate.connectionManager.serviceAdvertiser.stopAdvertisingPeer()
                 self.statusView.backgroundColor = UIColor.redColor()
-                self.inviteButton.enabled = false
                 self.appDelegate.connectionManager.session.disconnect()
-            }
-            else{
+            } else {
                 self.appDelegate.connectionManager.serviceAdvertiser.startAdvertisingPeer()
                 self.statusView.backgroundColor = UIColor.greenColor()
-                self.inviteButton.enabled = true
             }
             self.isAdvertising = !self.isAdvertising
+            
+            if self.isAdvertising == true {
+                self.inviteButton.enabled = true
+                print("enabling")
+            } else {
+                self.inviteButton.enabled = false
+                print("disabling")
+            }
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
+            
         }
         
         actionSheet.addAction(visibilityAction)
@@ -81,6 +89,12 @@ extension ViewController : UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let numberOfPlayers = appDelegate.connectionManager.connectedList.count
+        if numberOfPlayers == 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == true {
+            inviteButton.enabled = true
+        } else {
+            inviteButton.enabled = false
+        }
         return appDelegate.connectionManager.connectedList.count
     }
     
@@ -108,7 +122,7 @@ extension ViewController : ConnectionServiceManagerDelegate {
     
     func leftCurrentGroup() {
         print("Left current group")
-        self.inviteButton.enabled = true
+    //    self.inviteButton.enabled = true
         self.collectionView.reloadData()
     }
     
@@ -121,10 +135,12 @@ extension ViewController : ConnectionServiceManagerDelegate {
             self.inviteButton.enabled = false
             self.navigationController?.popToRootViewControllerAnimated(true)
             self.appDelegate.connectionManager.invitationHandlers(true, self.appDelegate.connectionManager.session)
+            self.appDelegate.connectionManager.acceptance = true
         }
         
         let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
             self.appDelegate.connectionManager.invitationHandlers(false, self.appDelegate.connectionManager.session)
+            self.appDelegate.connectionManager.acceptance = false
         }
         
         alert.addAction(acceptAction)
