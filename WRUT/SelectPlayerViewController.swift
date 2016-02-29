@@ -72,12 +72,16 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "chooseGame" {
             //let detailVC = segue.destinationViewController as! ChooseGameViewController
-            let leader = NSKeyedUnarchiver.unarchiveObjectWithData(self.userName) as? String
-            appDelegate.connectionManager.updates.append(leader! + " is starting a Game")
-            appDelegate.connectionManager.updateTimelineCollection(leader! + " is starting a Game")
+            if var profileName = defaults.objectForKey("Name") as? String {
+                if profileName.isEmpty {
+                    profileName = appDelegate.connectionManager.myPeerId.displayName
+                    print("displayname: \(appDelegate.connectionManager.myPeerId.displayName)")
+                }
+            appDelegate.connectionManager.updates.append(profileName + " is starting a Game")
+            appDelegate.connectionManager.updateTimelineCollection(profileName + " is starting a Game")
+            }
         }
     }
-    
 }
 
 extension SelectPlayerViewController : UICollectionViewDataSource {

@@ -11,6 +11,8 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var drawingList = [UIImage]()
+    
     var window: UIWindow?
 
     var connectionManager: ConnectionManager!

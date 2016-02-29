@@ -13,7 +13,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var updatesMPCollectionView: UICollectionView!
     
+    @IBOutlet weak var updatesViewFlowLayout: UICollectionViewFlowLayout!
+    
+    @IBOutlet weak var connectedProfilesFlowLayout: UICollectionViewFlowLayout!
+    
     @IBOutlet weak var statusBarButton: UIBarButtonItem!
+    
     @IBOutlet weak var statusView: UIView!
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -39,6 +44,10 @@ class ViewController: UIViewController {
         if let userName = self.defaults.objectForKey("Name") as? String {
             self.profileName = userName
         }
+        
+        //self.updatesViewFlowLayout.estimatedItemSize = CGSize(width: 200, height: 20)
+        
+        self.connectedProfilesFlowLayout.estimatedItemSize = CGSize (width: 50, height: 20)
         
         self.statusView.layer.cornerRadius = self.statusView.frame.size.width / 2
     }
@@ -73,6 +82,7 @@ class ViewController: UIViewController {
                 print("enabling")
             } else {
                 self.inviteButton.enabled = false
+                self.appDelegate.connectionManager.acceptance = false
                 print("disabling")
             }
         }
@@ -101,7 +111,7 @@ extension ViewController : UICollectionViewDataSource {
         if numberOfPlayers == 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == true {
             inviteButton.enabled = true
             print("1st case")
-        } else if numberOfPlayers > 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == false {
+        } else if numberOfPlayers >= 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == false {
             inviteButton.enabled = true
             print("2nd case")
         } else {
@@ -122,9 +132,19 @@ extension ViewController : UICollectionViewDataSource {
         return cell
         }
         let updateCell = collectionView.dequeueReusableCellWithReuseIdentifier("updateCollectionCell", forIndexPath: indexPath) as! UpdatesCollectionCell
+        
+        print(updatesMPCollectionView.frame.size.width)
+        
         updateCell.updatesCellField.text = appDelegate.connectionManager.updates[indexPath.row]
+        updateCell.frame.size.width = updatesMPCollectionView.frame.size.width - 30
+        updateCell.frame.origin.x = updatesMPCollectionView.frame.origin.x
+        
         return updateCell
     }
+}
+
+extension ViewController : UICollectionViewDelegate {
+    
 }
 
 extension ViewController : ConnectionServiceManagerDelegate {
@@ -141,11 +161,13 @@ extension ViewController : ConnectionServiceManagerDelegate {
         print("Updating connected List")
         self.collectionView.reloadData()
         self.updatesMPCollectionView.reloadData()
+        let item = self.updatesMPCollectionView.numberOfItemsInSection(0) - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        self.updatesMPCollectionView?.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Bottom, animated: false)
     }
     
     func leftCurrentGroup() {
         print("Left current group")
-    //    self.inviteButton.enabled = true
         self.collectionView.reloadData()
         self.updatesMPCollectionView.reloadData()
     }

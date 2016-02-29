@@ -19,7 +19,7 @@ protocol ConnectionServiceManagerDelegate {
 //    func connectedDevicesChanged(manager : ConnectionManager, connectedDevices: [String])
 //    func colorChanged(manager : ConnectionManager, colorString: String)
 //    func textReceived(manager : ConnectionManager, textReceived: String)
-//    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String)
+    
     
 }
 
@@ -32,6 +32,11 @@ protocol CSMPlayerSelectDelegate {
     
 }
 
+protocol CSMDrawingSheetDelegate {
+    
+    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String)
+}
+
 class ConnectionManager : NSObject {
     
     private let ConnectionServiceType = "naren-broadcast"
@@ -39,6 +44,8 @@ class ConnectionManager : NSObject {
     var delegate : ConnectionServiceManagerDelegate?
     
     var playerSelectDelegate : CSMPlayerSelectDelegate?
+    
+    var drawingSheetDelegate : CSMDrawingSheetDelegate?
     
     var acceptance: Bool!
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -60,8 +67,16 @@ class ConnectionManager : NSObject {
     override init() {
         
         super.init()
-        
         myPeerId = MCPeerID(displayName: UIDevice.currentDevice().name)
+        
+        if let profileName = defaults.objectForKey("Name") as? String {
+            if profileName.isEmpty {
+                print("No profile name set")
+            } else {
+                myPeerId = MCPeerID(displayName: profileName)
+            }
+        }
+        //myPeerId = MCPeerID(displayName: UIDevice.currentDevice().name)
         //connectedDevices.append(myPeerId)
         
         self.acceptance = false
@@ -118,6 +133,26 @@ class ConnectionManager : NSObject {
             }
         }
     }
+    
+    func sendImage(text: NSDictionary) {
+        NSLog("%@", "sendText: \(text)")
+        
+        let myData = NSKeyedArchiver.archivedDataWithRootObject(text)
+        
+        print("\(self.connectedDevices.count)")
+        print("\(self.connectedDevices)")
+        
+        if self.connectedDevices.count > 0 {
+            do {
+                try self.session.sendData(myData, toPeers: self.connectedDevices,
+                    withMode: MCSessionSendDataMode.Unreliable)
+            } catch {
+                // do something.
+                print("Bad quote!")
+            }
+        }
+        
+    }
 }
 
 
@@ -169,10 +204,12 @@ extension ConnectionManager : MCSessionDelegate {
             
             self.updates.append("Added to group: \(peerID.displayName)")
             
-            let profileName = self.defaults.objectForKey("Name") as? String
-            print("profileName \(profileName)")
-            self.connectedProfiles.append(profileName!)
-            
+            if let profileName = self.defaults.objectForKey("Name") as? String {
+                print("profileName \(profileName)")
+                self.connectedProfiles.append(profileName)
+            } else {
+                self.connectedProfiles.append(myPeerId.displayName)
+            }
             print("After-Connected \(self.connectedDevices)")
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -235,6 +272,7 @@ extension ConnectionManager : MCSessionDelegate {
         } else if let drawing = myDictionary["drawing"] as? UIImage {
             let instance = myDictionary["first"] as? String
             print("\(instance, drawing)")
+            self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
             
         } else if let newUpdate = myDictionary["updates"] as? String {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in

@@ -12,6 +12,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     let defaults = NSUserDefaults.standardUserDefaults()
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileNameField: UITextField!
 
@@ -97,7 +99,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         defaults.setObject(self.profileNameField.text, forKey: "Name")
         let imageAsData = UIImagePNGRepresentation(self.profileImageView.image!)
             defaults.setObject(imageAsData, forKey: "Image")
-        
+
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
