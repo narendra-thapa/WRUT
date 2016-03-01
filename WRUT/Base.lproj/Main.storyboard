@@ -509,7 +509,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kmx-ts-dAU">
                                 <rect key="frame" x="15" y="93" width="570" height="320.5"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B3p-8D-ymG">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlackBoard.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="B3p-8D-ymG">
                                         <rect key="frame" x="0.0" y="0.0" width="570" height="320.5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="B3p-8D-ymG" secondAttribute="height" multiplier="16:9" id="jnw-qh-N2t"/>
@@ -640,6 +640,10 @@
                                     <constraint firstAttribute="height" constant="30" id="pGa-H0-GDQ"/>
                                 </constraints>
                                 <state key="normal" title="New Game"/>
+                                <connections>
+                                    <action selector="NewLeaderSelect:" destination="oie-Fw-sak" eventType="touchUpInside" id="PRR-g0-yHl"/>
+                                    <segue destination="rjE-Dv-sbx" kind="presentation" id="kZP-52-pi8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch2-YV-tp9">
                                 <rect key="frame" x="505" y="30" width="75" height="30"/>
@@ -648,6 +652,9 @@
                                     <constraint firstAttribute="width" constant="75" id="f4N-0i-Cry"/>
                                 </constraints>
                                 <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="startNewGame:" destination="oie-Fw-sak" eventType="touchUpInside" id="Tx3-xn-Pb6"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -668,11 +675,81 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="aUg-MP-bdD" id="88J-eJ-3ld"/>
+                        <outlet property="newLeaderSelect" destination="thg-Tv-TVL" id="03S-K1-c7W"/>
+                        <outlet property="startNewGame" destination="ch2-YV-tp9" id="31p-Ip-NXV"/>
+                        <outlet property="updateLabel" destination="EfO-47-TiR" id="eZS-sn-jsa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6xA-bF-TQE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4085" y="419"/>
+        </scene>
+        <!--Select Leader View Controller-->
+        <scene sceneID="vmp-P2-p5g">
+            <objects>
+                <viewController storyboardIdentifier="selectNewLeader" id="rjE-Dv-sbx" customClass="SelectLeaderViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qgm-dv-iAc"/>
+                        <viewControllerLayoutGuide type="bottom" id="h4f-4i-Hw4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VvE-BV-lrv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aFm-sf-fSw">
+                                <rect key="frame" x="150" y="156" width="300" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="onlineListCell" rowHeight="40" id="p7n-G1-Umv" customClass="OnlineTableCell" customModule="WRUT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="300" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p7n-G1-Umv" id="bp4-3m-tI6">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="39.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8s-28-v5O">
+                                                    <rect key="frame" x="8" y="8" width="284" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="o8s-28-v5O" id="3Uj-qf-5O5"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="rjE-Dv-sbx" id="qrr-i2-e8r"/>
+                                    <outlet property="delegate" destination="rjE-Dv-sbx" id="Xma-yE-Mbi"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a player to select new game" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aaq-GH-o1w">
+                                <rect key="frame" x="161" y="71" width="277" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="m2F-cV-pY5"/>
+                                    <constraint firstAttribute="height" constant="21" id="qrw-JL-tsH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aFm-sf-fSw" firstAttribute="height" secondItem="VvE-BV-lrv" secondAttribute="height" multiplier="0.5" id="BkY-6L-6ka"/>
+                            <constraint firstItem="aFm-sf-fSw" firstAttribute="width" secondItem="VvE-BV-lrv" secondAttribute="width" multiplier="0.5" id="Eq7-xV-bQp"/>
+                            <constraint firstItem="aFm-sf-fSw" firstAttribute="top" secondItem="Aaq-GH-o1w" secondAttribute="bottom" constant="64" id="N9i-kq-mws"/>
+                            <constraint firstItem="Aaq-GH-o1w" firstAttribute="centerX" secondItem="VvE-BV-lrv" secondAttribute="centerX" id="OkD-hN-1aW"/>
+                            <constraint firstItem="aFm-sf-fSw" firstAttribute="centerX" secondItem="VvE-BV-lrv" secondAttribute="centerX" id="gr0-Mx-3e0"/>
+                            <constraint firstItem="Aaq-GH-o1w" firstAttribute="top" secondItem="qgm-dv-iAc" secondAttribute="bottom" constant="51" id="kHt-A4-NNj"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pzT-hI-Sjl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4824" y="419"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8p5-6g-Ujd">
@@ -693,4 +770,7 @@
             <point key="canvasLocation" x="393" y="387"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="BlackBoard.jpg" width="770" height="410"/>
+    </resources>
 </document>

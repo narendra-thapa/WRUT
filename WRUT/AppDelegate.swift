@@ -10,6 +10,9 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var drawCollectionNewGameButton: Bool = false
+    var drawCollectionStartGameButton: Bool = false
 
     var drawingList = [UIImage]()
     

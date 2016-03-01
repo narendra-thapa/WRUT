@@ -14,18 +14,55 @@ class DrawingCollectionViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var newLeaderSelect: UIButton!
+    @IBOutlet weak var startNewGame: UIButton!
+    
+    @IBOutlet weak var updateLabel: UILabel!
+    
     //var imagelist = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.newLeaderSelect.enabled = false
+        self.startNewGame.enabled = false
+    
         appDelegate.connectionManager.drawingSheetDelegate = self
+        
+        if appDelegate.drawCollectionNewGameButton {
+            self.newLeaderSelect.enabled = true
+        }
+        if appDelegate.drawCollectionStartGameButton {
+            self.startNewGame.enabled = true
+        }
 
 //    NSNotificationCenter.defaultCenter().addObserverForName("newDrawing", object: nil, queue: NSOperationQueue.mainQueue()) { (NSNotification) -> Void in
 //      //      self.imagelist = self.appDelegate.drawingList
 //            self.collectionView.reloadData()
 //        }
     }
+    
+    
+    @IBAction func NewLeaderSelect(sender: UIButton) {
+        
+        // turn off newleader button off
+        
+    }
+    
+    @IBAction func startNewGame(sender: UIButton) {
+        
+//        self.dismissViewControllerAnimated(true) { () -> Void in
+//            print("Going back once")
+//        }
+//        self.dismissViewControllerAnimated(true) { () -> Void in
+//            print("Going back twice")
+//        }
+        
+        
+        // turn off newGame button off
+        
+    }
+    
+    
 }
 
 extension DrawingCollectionViewController : UICollectionViewDataSource {
@@ -60,6 +97,10 @@ extension DrawingCollectionViewController : CSMDrawingSheetDelegate {
                 self.collectionView.reloadData()
             }
         }
+    }
+    
+    func activateStartButton() {
+        self.startNewGame.enabled = true
     }
     
 }

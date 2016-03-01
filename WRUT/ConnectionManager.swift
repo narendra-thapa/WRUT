@@ -36,6 +36,7 @@ protocol CSMPlayerSelectDelegate {
 protocol CSMDrawingSheetDelegate {
     
     func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String)
+    func activateStartButton()
 }
 
 class ConnectionManager : NSObject {
@@ -154,6 +155,23 @@ class ConnectionManager : NSObject {
         }
         
     }
+    
+    func activateStartButton(update: MCPeerID) {
+        if self.connectedDevices.count > 0 {
+            let newLeader : [MCPeerID] = [update]
+            let sendDict: NSDictionary = ["activate":"activate"]
+            let myData = NSKeyedArchiver.archivedDataWithRootObject(sendDict)
+            do {
+                try self.session.sendData(myData, toPeers: newLeader,
+                    withMode: MCSessionSendDataMode.Unreliable)
+                print("Successfully sent")
+            } catch {
+                // do something.
+                print("Bad quote!")
+            }
+        }
+    }
+    
 }
 
 
@@ -289,6 +307,13 @@ extension ConnectionManager : MCSessionDelegate {
                 self.updates.append(newUpdate)
                 self.delegate?.updatePlayerList()
             })
+            
+        } else if let newUpdate = myDictionary["activate"] as? String {
+            if newUpdate == "activate" {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.drawingSheetDelegate?.activateStartButton()
+                })
+            }
         }
     }
     

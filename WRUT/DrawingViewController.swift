@@ -66,6 +66,9 @@ class DrawingViewController: UIViewController {
         
         let sendDrawing: NSDictionary = ["drawing":image, "first": "true"]
         self.appDelegate.connectionManager.sendImage(sendDrawing)
+        self.appDelegate.drawCollectionNewGameButton = true
+
+        timer.invalidate()
         
         self.performSegueWithIdentifier("drawingCollection", sender: self)
         
@@ -84,6 +87,8 @@ class DrawingViewController: UIViewController {
         
         let sendDrawing: NSDictionary = ["drawing":image, "first": "false"]
         self.appDelegate.connectionManager.sendImage(sendDrawing)
+        
+        timer.invalidate()
         
         self.performSegueWithIdentifier("drawingCollection", sender: self)
     }
