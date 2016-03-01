@@ -497,7 +497,7 @@
         <!--Drawing View Controller-->
         <scene sceneID="L7c-k6-NLx">
             <objects>
-                <viewController id="rhd-Kl-hZj" customClass="DrawingViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="drawingView" id="rhd-Kl-hZj" customClass="DrawingViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eJO-x7-7Vl"/>
                         <viewControllerLayoutGuide type="bottom" id="AeB-k4-hNu"/>
@@ -517,7 +517,7 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6B3-c6-NOO" customClass="DrawView" customModule="WRUT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="570" height="321"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="6B3-c6-NOO" secondAttribute="height" multiplier="16:9" id="apU-fQ-b7u"/>
                                         </constraints>
@@ -574,10 +574,10 @@
             </objects>
             <point key="canvasLocation" x="3354" y="419"/>
         </scene>
-        <!--View Controller-->
+        <!--Drawing Collection View Controller-->
         <scene sceneID="HBS-xR-UjL">
             <objects>
-                <viewController id="oie-Fw-sak" sceneMemberID="viewController">
+                <viewController id="oie-Fw-sak" customClass="DrawingCollectionViewController" customModule="WRUT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ugd-gw-CGb"/>
                         <viewControllerLayoutGuide type="bottom" id="7mE-hY-vJl"/>
@@ -595,18 +595,36 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="RzQ-qQ-UNw">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="drawingImageCell" id="RzQ-qQ-UNw" customClass="DrawingCollectionViewCell" customModule="WRUT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="64" width="211" height="220"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="211" height="220"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pbx-KJ-jbH">
+                                                    <rect key="frame" x="8" y="8" width="195" height="204"/>
+                                                </imageView>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="Pbx-KJ-jbH" firstAttribute="leading" secondItem="RzQ-qQ-UNw" secondAttribute="leadingMargin" id="30y-0R-MDh"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Pbx-KJ-jbH" secondAttribute="bottom" id="B4w-6E-3wj"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="Pbx-KJ-jbH" secondAttribute="trailing" id="DwS-xa-Yrh"/>
+                                            <constraint firstItem="Pbx-KJ-jbH" firstAttribute="top" secondItem="RzQ-qQ-UNw" secondAttribute="topMargin" id="Ujb-WO-F9x"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="Pbx-KJ-jbH" id="D84-TP-6nm"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="oie-Fw-sak" id="qxx-4P-HZn"/>
+                                    <outlet property="delegate" destination="oie-Fw-sak" id="jhQ-N2-pNo"/>
+                                </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EfO-47-TiR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EfO-47-TiR">
                                 <rect key="frame" x="103" y="74" width="394" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="WEj-Pd-hs3"/>
@@ -648,6 +666,9 @@
                             <constraint firstItem="aUg-MP-bdD" firstAttribute="leading" secondItem="nq1-Z8-byc" secondAttribute="leadingMargin" id="yA3-X8-AcK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="aUg-MP-bdD" id="88J-eJ-3ld"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6xA-bF-TQE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

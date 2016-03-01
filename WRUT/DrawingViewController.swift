@@ -16,30 +16,40 @@ class DrawingViewController: UIViewController {
     @IBOutlet weak var imageDrawView: UIImageView!
     @IBOutlet weak var timerLabel: UILabel!
     var counter = 0
+    var counter2 = 0
     var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // start timer and inform others
         timer.invalidate() // just in case this button is tapped multiple times
         // start the timer
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-        
+        if appDelegate.drawingInstance {
+            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
+            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        } else {
+            let image = self.appDelegate.drawingReceived
+            self.imageDrawView.image = image
+            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        }
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func timerAction() {
         ++counter
         timerLabel.text = "\(counter)"
         if (counter == 5) {
             trigger()
+        }
+    }
+    
+    func timerAction2() {
+        ++counter2
+        timerLabel.text = "\(counter2)"
+        if (counter2 == 10) {
+            trigger2()
         }
     }
     
@@ -58,34 +68,28 @@ class DrawingViewController: UIViewController {
         self.appDelegate.connectionManager.sendImage(sendDrawing)
         
         self.performSegueWithIdentifier("drawingCollection", sender: self)
+    }
+    
+    func trigger2() {
         
-    }
-
-}
-
-
-extension DrawingViewController : CSMDrawingSheetDelegate {
-    
-    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String) {
-    NSOperationQueue.mainQueue().addOperationWithBlock {
-    print("drawing received: \(drawingReceived)")
-    
-    if instances == "true" {
-    self.imageDrawView.image = drawingReceived
-    
-    self.appDelegate.drawingList.append(drawingReceived)
-    NSNotificationCenter.defaultCenter().postNotificationName("newDrawing", object: nil)
-    
-    self.timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "secondTimerAction", userInfo: nil, repeats: true)
-    NSRunLoop.currentRunLoop().addTimer(self.timer, forMode: NSRunLoopCommonModes)
-    
-    } else {
-    self.appDelegate.drawingList.append(drawingReceived)
-            }
-        }
+        UIGraphicsBeginImageContextWithOptions(containerView.bounds.size, false, 0.0)
+        containerView.drawViewHierarchyInRect(containerView.bounds, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        
+        //ImageList.append(image)
+        
+        appDelegate.drawingList.append(image)
+        UIGraphicsEndImageContext()
+        
+        let sendDrawing: NSDictionary = ["drawing":image, "first": "false"]
+        self.appDelegate.connectionManager.sendImage(sendDrawing)
+        
+        self.performSegueWithIdentifier("drawingCollection", sender: self)
     }
     
 }
+
+
 
 
 

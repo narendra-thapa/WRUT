@@ -13,6 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var drawingList = [UIImage]()
     
+    var drawingReceived = UIImage()
+    
+    var drawingInstance : Bool = true
+    
     var window: UIWindow?
 
     var connectionManager: ConnectionManager!

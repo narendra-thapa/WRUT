@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "DrawingViewController.viewDidLoad() -&gt; ():DrawingViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(UIImage)self.appDelegate.drawingReceived">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ConnectionManager.updatePlayerCollection() -&gt; ():ConnectionManager.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

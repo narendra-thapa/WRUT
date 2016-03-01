@@ -15,6 +15,7 @@ protocol ConnectionServiceManagerDelegate {
     func connectedWithPeer(peerID: MCPeerID)
     func updatePlayerList()
     func leftCurrentGroup()
+    func loadDrawingView(drawingReceived: UIImage)
     
 //    func connectedDevicesChanged(manager : ConnectionManager, connectedDevices: [String])
 //    func colorChanged(manager : ConnectionManager, colorString: String)
@@ -134,10 +135,10 @@ class ConnectionManager : NSObject {
         }
     }
     
-    func sendImage(text: NSDictionary) {
-        NSLog("%@", "sendText: \(text)")
+    func sendImage(imageData: NSDictionary) {
+        NSLog("%@", "sendImage: \(imageData)")
         
-        let myData = NSKeyedArchiver.archivedDataWithRootObject(text)
+        let myData = NSKeyedArchiver.archivedDataWithRootObject(imageData)
         
         print("\(self.connectedDevices.count)")
         print("\(self.connectedDevices)")
@@ -271,8 +272,17 @@ extension ConnectionManager : MCSessionDelegate {
             
         } else if let drawing = myDictionary["drawing"] as? UIImage {
             let instance = myDictionary["first"] as? String
-            print("\(instance, drawing)")
-            self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                print("\(instance, drawing)")
+                if instance! == "true" {
+                    self.delegate?.loadDrawingView(drawing)
+                    print("Hello")
+                } else {
+                    self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
+                }
+            })
             
         } else if let newUpdate = myDictionary["updates"] as? String {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
