@@ -68,6 +68,7 @@ class DrawingViewController: UIViewController {
         self.appDelegate.connectionManager.sendImage(sendDrawing)
         
         self.performSegueWithIdentifier("drawingCollection", sender: self)
+        
     }
     
     func trigger2() {

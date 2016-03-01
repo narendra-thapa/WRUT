@@ -567,7 +567,7 @@
                         <outlet property="containerView" destination="kmx-ts-dAU" id="ziX-Pp-xuK"/>
                         <outlet property="imageDrawView" destination="B3p-8D-ymG" id="sGi-mb-Rhu"/>
                         <outlet property="timerLabel" destination="4KB-xc-9Ph" id="7nf-mI-ITn"/>
-                        <segue destination="oie-Fw-sak" kind="show" identifier="drawingCollection" id="Bcf-g6-0Dx"/>
+                        <segue destination="oie-Fw-sak" kind="presentation" identifier="drawingCollection" id="Bcf-g6-0Dx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W3G-0l-yKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -587,7 +587,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aUg-MP-bdD">
-                                <rect key="frame" x="20" y="119" width="560" height="461"/>
+                                <rect key="frame" x="20" y="75" width="560" height="505"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qgJ-NE-US6">
                                     <size key="itemSize" width="211" height="220"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -596,7 +596,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="drawingImageCell" id="RzQ-qQ-UNw" customClass="DrawingCollectionViewCell" customModule="WRUT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="64" width="211" height="220"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="211" height="220"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="211" height="220"/>
@@ -625,7 +625,7 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EfO-47-TiR">
-                                <rect key="frame" x="103" y="74" width="394" height="30"/>
+                                <rect key="frame" x="103" y="30" width="394" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="WEj-Pd-hs3"/>
                                 </constraints>
@@ -634,7 +634,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thg-Tv-TVL">
-                                <rect key="frame" x="20" y="74" width="75" height="30"/>
+                                <rect key="frame" x="20" y="30" width="75" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="MbX-LG-15q"/>
                                     <constraint firstAttribute="height" constant="30" id="pGa-H0-GDQ"/>
@@ -642,7 +642,7 @@
                                 <state key="normal" title="New Game"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ch2-YV-tp9">
-                                <rect key="frame" x="505" y="74" width="75" height="30"/>
+                                <rect key="frame" x="505" y="30" width="75" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="eUo-uQ-5DJ"/>
                                     <constraint firstAttribute="width" constant="75" id="f4N-0i-Cry"/>
