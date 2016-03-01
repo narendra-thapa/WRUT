@@ -14,8 +14,12 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let defaults = NSUserDefaults.standardUserDefaults()
     
+    @IBOutlet weak var goBackButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.goBackButton.enabled = false
     }    
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -40,9 +44,18 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
         cell.accessoryType = UITableViewCellAccessoryType.Checkmark
     
         // Activate start button for selected peer
-        appDelegate.connectionManager.activateStartButton(selectedPeer)
+        self.appDelegate.connectionManager.activateStartButton(selectedPeer)
         
+        self.goBackButton.enabled = true
         
         }
+    
+    @IBAction func goBackButtonPressed(sender: UIButton) {
+        print("Go Back Button Pressed")
+        
     }
+    
+    
+    
+}
 

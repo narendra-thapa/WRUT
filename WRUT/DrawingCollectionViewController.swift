@@ -58,9 +58,13 @@ class DrawingCollectionViewController: UIViewController {
 //        }
         
         
+        
+        
         // turn off newGame button off
         
     }
+    
+    
     
     
 }

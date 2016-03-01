@@ -56,6 +56,15 @@ class ViewController: UIViewController {
         
     }
     
+    
+    @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
+    {
+        print("Coming back to root view")
+        self.inviteButton.enabled = true
+        //let sourceViewController = sender.sourceViewController
+        // Pull any data from the view controller which initiated the unwind segue.
+    }
+    
     @IBAction func toggleAdvertising(sender: UIBarButtonItem) {
         let actionSheet = UIAlertController(title: "", message: "Change Visibility", preferredStyle: .ActionSheet)
         

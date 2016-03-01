@@ -462,7 +462,7 @@
                                     <constraint firstAttribute="width" constant="200" id="UxB-Pj-O8w"/>
                                     <constraint firstAttribute="height" constant="60" id="mm5-k2-49I"/>
                                 </constraints>
-                                <state key="normal" title="Complete My Story">
+                                <state key="normal" title="Doodle My Picture">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -488,6 +488,7 @@
                     </view>
                     <connections>
                         <segue destination="rhd-Kl-hZj" kind="show" identifier="drawingGame" id="WBk-J3-6WF"/>
+                        <segue destination="Fd8-Cg-jzh" kind="show" identifier="pictureDrawGame" id="ZkH-Cu-l9Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kJZ-8z-6gc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -572,7 +573,49 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W3G-0l-yKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3354" y="419"/>
+            <point key="canvasLocation" x="3346" y="68"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="iup-Q3-l76">
+            <objects>
+                <viewController id="Fd8-Cg-jzh" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZCi-KF-29O"/>
+                        <viewControllerLayoutGuide type="bottom" id="Sfv-Y6-MbL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="d0l-ed-0qZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RB7-rP-htw">
+                                <rect key="frame" x="200" y="186" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="9Kj-Li-Nsf"/>
+                                    <constraint firstAttribute="height" constant="30" id="BUo-Xf-1Bn"/>
+                                </constraints>
+                                <state key="normal" title="Select Photo From Library"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oyn-vL-XAv">
+                                <rect key="frame" x="200.5" y="387" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="kvb-aP-C1N"/>
+                                    <constraint firstAttribute="height" constant="30" id="m88-bi-v27"/>
+                                </constraints>
+                                <state key="normal" title="Take a Photo"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Oyn-vL-XAv" firstAttribute="centerY" secondItem="d0l-ed-0qZ" secondAttribute="centerY" multiplier="1.34" id="IuC-0v-erR"/>
+                            <constraint firstItem="Oyn-vL-XAv" firstAttribute="centerX" secondItem="d0l-ed-0qZ" secondAttribute="centerX" id="SgZ-R8-mbV"/>
+                            <constraint firstItem="RB7-rP-htw" firstAttribute="centerY" secondItem="d0l-ed-0qZ" secondAttribute="centerY" multiplier="0.67" id="lrd-lA-CYf"/>
+                            <constraint firstItem="RB7-rP-htw" firstAttribute="centerX" secondItem="d0l-ed-0qZ" secondAttribute="centerX" id="ptu-7s-bJg"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MZD-iF-lX3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3346" y="845"/>
         </scene>
         <!--Drawing Collection View Controller-->
         <scene sceneID="HBS-xR-UjL">
@@ -653,7 +696,7 @@
                                 </constraints>
                                 <state key="normal" title="Start"/>
                                 <connections>
-                                    <action selector="startNewGame:" destination="oie-Fw-sak" eventType="touchUpInside" id="Tx3-xn-Pb6"/>
+                                    <segue destination="I8S-eU-QK6" kind="unwind" unwindAction="unwindToMainMenu:" id="jAV-oK-8k5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -681,6 +724,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6xA-bF-TQE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="I8S-eU-QK6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4085" y="419"/>
         </scene>
@@ -735,19 +779,37 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bt8-qR-dfo">
+                                <rect key="frame" x="270" y="484" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="HOJ-la-M0a"/>
+                                    <constraint firstAttribute="height" constant="30" id="xgB-uf-T4I"/>
+                                </constraints>
+                                <state key="normal" title="Go Back"/>
+                                <connections>
+                                    <action selector="goBackButtonPressed:" destination="rjE-Dv-sbx" eventType="touchUpInside" id="NIc-UG-HTK"/>
+                                    <segue destination="BWw-Il-ndY" kind="unwind" unwindAction="unwindToMainMenu:" id="dTa-Pv-8tT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aFm-sf-fSw" firstAttribute="height" secondItem="VvE-BV-lrv" secondAttribute="height" multiplier="0.5" id="BkY-6L-6ka"/>
                             <constraint firstItem="aFm-sf-fSw" firstAttribute="width" secondItem="VvE-BV-lrv" secondAttribute="width" multiplier="0.5" id="Eq7-xV-bQp"/>
+                            <constraint firstItem="Bt8-qR-dfo" firstAttribute="centerX" secondItem="VvE-BV-lrv" secondAttribute="centerX" id="Iyw-9s-IOk"/>
                             <constraint firstItem="aFm-sf-fSw" firstAttribute="top" secondItem="Aaq-GH-o1w" secondAttribute="bottom" constant="64" id="N9i-kq-mws"/>
                             <constraint firstItem="Aaq-GH-o1w" firstAttribute="centerX" secondItem="VvE-BV-lrv" secondAttribute="centerX" id="OkD-hN-1aW"/>
+                            <constraint firstItem="Bt8-qR-dfo" firstAttribute="top" secondItem="aFm-sf-fSw" secondAttribute="bottom" constant="28" id="awr-TQ-I74"/>
                             <constraint firstItem="aFm-sf-fSw" firstAttribute="centerX" secondItem="VvE-BV-lrv" secondAttribute="centerX" id="gr0-Mx-3e0"/>
                             <constraint firstItem="Aaq-GH-o1w" firstAttribute="top" secondItem="qgm-dv-iAc" secondAttribute="bottom" constant="51" id="kHt-A4-NNj"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="goBackButton" destination="Bt8-qR-dfo" id="UPb-sZ-Ptk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzT-hI-Sjl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="BWw-Il-ndY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4824" y="419"/>
         </scene>
