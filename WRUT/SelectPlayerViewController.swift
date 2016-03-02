@@ -25,6 +25,8 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate.restrictRotation = true
+        
         appDelegate.connectionManager.playerSelectDelegate = self
     }
     

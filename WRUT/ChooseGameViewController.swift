@@ -19,6 +19,8 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate.restrictRotation = true
+        
         imagePicker.delegate = self
     }
     
@@ -37,11 +39,12 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         
         let photoLibraryAction: UIAlertAction = UIAlertAction(title: "Library", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
             print("Photo Library")
-            self.imageSelector()
+            self.imageSelectorLibrary()
         }
         
         let cameraAction = UIAlertAction(title: "Camera", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
             print("Camera")
+            self.imageSelectorCamera()
         }
         
         alert.addAction(photoLibraryAction)
@@ -52,21 +55,33 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    func imageSelector() {
-        self.imagePicker.allowsEditing = true
+    func imageSelectorLibrary() {
+        self.imagePicker.allowsEditing = false
         self.imagePicker.sourceType = .PhotoLibrary
+  
         presentViewController(self.imagePicker, animated: true, completion: nil)
     }
     
+    func imageSelectorCamera() {
+        self.imagePicker.allowsEditing = false
+        self.imagePicker.sourceType = .Camera
+        presentViewController(self.imagePicker, animated: true, completion: nil)
+    }
+    
+    
     // MARK: - UIImagePickerControllerDelegate Methods
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         dismissViewControllerAnimated(true, completion: nil)
-    //    profileImageView.contentMode = .ScaleAspectFill
-        self.appDelegate.doodleImage = image
+        //    profileImageView.contentMode = .ScaleAspectFill
+       // let editImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        let editImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.appDelegate.doodleImage = editImage!
         self.appDelegate.gameChoosen = "Doodle"
         self.performSegueWithIdentifier("drawingGame", sender: self)
     }
+    
+ //   func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {}
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)

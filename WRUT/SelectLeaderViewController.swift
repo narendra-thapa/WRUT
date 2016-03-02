@@ -19,6 +19,8 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate.restrictRotation = true
+        
         self.goBackButton.enabled = false
     }    
 

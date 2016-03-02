@@ -53,6 +53,8 @@ class ViewController: UIViewController {
 //            print("3rd case \(numberOfPlayers) \(isAdvertising) \(self.appDelegate.connectionManager.acceptance)")
 //        }
         
+        appDelegate.restrictRotation = true
+        
         if appDelegate.iAmLeader {
             self.inviteButton.enabled = true
         }

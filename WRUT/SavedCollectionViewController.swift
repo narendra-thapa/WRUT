@@ -21,6 +21,8 @@ class SavedCollectionViewController: UIViewController, UICollectionViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate.restrictRotation = true
+        
         if self.selectedSection == 0 {
             self.imageList = appDelegate.savedDrawingCollection[selectedRow] as! [UIImage]
         } else if self.selectedSection == 1 {

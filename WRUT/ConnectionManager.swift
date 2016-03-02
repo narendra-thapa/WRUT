@@ -76,6 +76,8 @@ class ConnectionManager : NSObject {
         super.init()
         myPeerId = MCPeerID(displayName: UIDevice.currentDevice().name)
         
+        appDelegate.deviceModel = UIDevice.currentDevice().model
+        
         if let profileName = defaults.objectForKey("Name") as? String {
             if profileName.isEmpty {
                 print("No profile name set")

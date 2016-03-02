@@ -26,6 +26,8 @@
 		48E30BDF1C8675CA00C86272 /* SavedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BDE1C8675CA00C86272 /* SavedListViewController.swift */; };
 		48E30BE11C86760E00C86272 /* SavedListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BE01C86760E00C86272 /* SavedListTableViewCell.swift */; };
 		48E30BE31C867BC100C86272 /* SavedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BE21C867BC100C86272 /* SavedCollectionViewController.swift */; };
+		48E30BE51C87886C00C86272 /* Funny-cartoon-pencil-vector-material-01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48E30BE41C87886C00C86272 /* Funny-cartoon-pencil-vector-material-01.jpg */; };
+		48E30BE71C8789BE00C86272 /* turtle-holding-pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 48E30BE61C8789BE00C86272 /* turtle-holding-pencil.png */; };
 		48F6051F1C7F6E9E003056D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F6051E1C7F6E9E003056D3 /* AppDelegate.swift */; };
 		48F605211C7F6E9E003056D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F605201C7F6E9E003056D3 /* ViewController.swift */; };
 		48F605241C7F6E9E003056D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48F605221C7F6E9E003056D3 /* Main.storyboard */; };
@@ -53,6 +55,8 @@
 		48E30BDE1C8675CA00C86272 /* SavedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedListViewController.swift; sourceTree = "<group>"; };
 		48E30BE01C86760E00C86272 /* SavedListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedListTableViewCell.swift; sourceTree = "<group>"; };
 		48E30BE21C867BC100C86272 /* SavedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedCollectionViewController.swift; sourceTree = "<group>"; };
+		48E30BE41C87886C00C86272 /* Funny-cartoon-pencil-vector-material-01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Funny-cartoon-pencil-vector-material-01.jpg"; sourceTree = "<group>"; };
+		48E30BE61C8789BE00C86272 /* turtle-holding-pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "turtle-holding-pencil.png"; sourceTree = "<group>"; };
 		48F6051B1C7F6E9E003056D3 /* WRUT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WRUT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F6051E1C7F6E9E003056D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48F605201C7F6E9E003056D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 				48E30BC01C80E0D200C86272 /* PlayerCollectionCell.swift */,
 				48E30BCA1C835D1800C86272 /* UpdatesCollectionCell.swift */,
 				48F605221C7F6E9E003056D3 /* Main.storyboard */,
+				48E30BE61C8789BE00C86272 /* turtle-holding-pencil.png */,
+				48E30BE41C87886C00C86272 /* Funny-cartoon-pencil-vector-material-01.jpg */,
 				48E30BE01C86760E00C86272 /* SavedListTableViewCell.swift */,
 				48E30BDE1C8675CA00C86272 /* SavedListViewController.swift */,
 				48E30BE21C867BC100C86272 /* SavedCollectionViewController.swift */,
@@ -185,6 +191,8 @@
 				48F605261C7F6E9E003056D3 /* Assets.xcassets in Resources */,
 				48F605241C7F6E9E003056D3 /* Main.storyboard in Resources */,
 				48E30BC71C82896400C86272 /* Planet.jpg in Resources */,
+				48E30BE51C87886C00C86272 /* Funny-cartoon-pencil-vector-material-01.jpg in Resources */,
+				48E30BE71C8789BE00C86272 /* turtle-holding-pencil.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

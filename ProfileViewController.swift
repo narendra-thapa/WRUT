@@ -35,6 +35,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.profileNameField.text = profileName
         }
         
+        appDelegate.restrictRotation = true
+        
         // Making image view circular
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
         self.profileImageView.clipsToBounds = true

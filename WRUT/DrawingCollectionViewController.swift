@@ -23,13 +23,19 @@ class DrawingCollectionViewController: UIViewController {
         super.viewDidLoad()
         
         self.newLeaderSelect.enabled = false
+        
+        appDelegate.restrictRotation = true
     
         appDelegate.connectionManager.drawingSheetDelegate = self
         
-        if appDelegate.drawCollectionNewGameButton {
+//        if appDelegate.drawCollectionNewGameButton {
+//            self.newLeaderSelect.enabled = true
+//        }
+       
+        if appDelegate.iAmLeader {
             self.newLeaderSelect.enabled = true
         }
-       
+        
         appDelegate.drawingSourceViewController = false
 
     }

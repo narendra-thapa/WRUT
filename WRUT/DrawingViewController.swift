@@ -18,29 +18,36 @@ class DrawingViewController: UIViewController {
     
     var counter = 5
     var counter2 = 10
+    var counter3 = 15
     var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate.restrictRotation = false
+        
         self.imageDrawView.image = nil
         
         // start timer and inform others
         timer.invalidate()
-        
-        
-            
 
         if appDelegate.drawingInstance {
             
             if appDelegate.gameChoosen == "Doodle" {
                 let image = self.appDelegate.doodleImage
+                
+                let width = self.appDelegate.doodleImage.size.width
+                let height = self.appDelegate.doodleImage.size.height
+                
+                self.imageDrawView.frame.size.width = width
+                self.imageDrawView.frame.size.height = height
+                
                 self.imageDrawView.image = image
                 
                 let sendDrawing: NSDictionary = ["drawing":image, "first": "doodle"]
                 self.appDelegate.connectionManager.sendImage(sendDrawing)
                 
-                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction3", userInfo: nil, repeats: true)
                 NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
                 
             } else if appDelegate.gameChoosen == "Drawing" {
@@ -51,18 +58,13 @@ class DrawingViewController: UIViewController {
             
             }
 
-            
         } else {
-            
-            
             
             let image = self.appDelegate.drawingReceived
             self.imageDrawView.image = image
             timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-            }
-        
-
+        }
     }
 
     
@@ -78,6 +80,14 @@ class DrawingViewController: UIViewController {
         timerLabel.text = "\(counter2)"
         --counter2
         if (counter2 == 0) {
+            trigger2()
+        }
+    }
+    
+    func timerAction3() {
+        timerLabel.text = "\(counter3)"
+        --counter3
+        if (counter3 == 0) {
             trigger2()
         }
     }

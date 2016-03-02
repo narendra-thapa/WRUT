@@ -10,6 +10,8 @@ import UIKit
 
 class DrawView: UIView {
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     var lines: [Line] = []
     var lastPoint: CGPoint!
     
@@ -39,9 +41,17 @@ class DrawView: UIView {
             
         }
         
-        CGContextSetRGBStrokeColor(context, 248/255.0, 248/255.0, 255/255.0, 0.8)
+        if appDelegate.gameChoosen == "Drawing" {
+            CGContextSetRGBStrokeColor(context, 248/255.0, 248/255.0, 255/255.0, 0.8)
+        } else {
+            CGContextSetRGBStrokeColor(context, 0, 0, 0, 1)
+        }
         
-        CGContextSetLineWidth(context, 5)
+        if appDelegate.deviceModel == "iPhone" {
+            CGContextSetLineWidth(context, 5)
+        } else if appDelegate.deviceModel == "iPad" {
+            CGContextSetLineWidth(context, 8)
+        }
         
         CGContextSetLineCap(context, CGLineCap.Round)
 
