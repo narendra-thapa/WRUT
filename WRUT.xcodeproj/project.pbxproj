@@ -23,6 +23,9 @@
 		48E30BD91C84F3E500C86272 /* DrawingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BD81C84F3E500C86272 /* DrawingCollectionViewCell.swift */; };
 		48E30BDB1C852B2200C86272 /* SelectLeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BDA1C852B2200C86272 /* SelectLeaderViewController.swift */; };
 		48E30BDD1C853FDE00C86272 /* BlackBoard.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 48E30BDC1C853FDE00C86272 /* BlackBoard.jpg */; };
+		48E30BDF1C8675CA00C86272 /* SavedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BDE1C8675CA00C86272 /* SavedListViewController.swift */; };
+		48E30BE11C86760E00C86272 /* SavedListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BE01C86760E00C86272 /* SavedListTableViewCell.swift */; };
+		48E30BE31C867BC100C86272 /* SavedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E30BE21C867BC100C86272 /* SavedCollectionViewController.swift */; };
 		48F6051F1C7F6E9E003056D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F6051E1C7F6E9E003056D3 /* AppDelegate.swift */; };
 		48F605211C7F6E9E003056D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F605201C7F6E9E003056D3 /* ViewController.swift */; };
 		48F605241C7F6E9E003056D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48F605221C7F6E9E003056D3 /* Main.storyboard */; };
@@ -47,6 +50,9 @@
 		48E30BD81C84F3E500C86272 /* DrawingCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingCollectionViewCell.swift; sourceTree = "<group>"; };
 		48E30BDA1C852B2200C86272 /* SelectLeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectLeaderViewController.swift; sourceTree = "<group>"; };
 		48E30BDC1C853FDE00C86272 /* BlackBoard.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BlackBoard.jpg; sourceTree = "<group>"; };
+		48E30BDE1C8675CA00C86272 /* SavedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedListViewController.swift; sourceTree = "<group>"; };
+		48E30BE01C86760E00C86272 /* SavedListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedListTableViewCell.swift; sourceTree = "<group>"; };
+		48E30BE21C867BC100C86272 /* SavedCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedCollectionViewController.swift; sourceTree = "<group>"; };
 		48F6051B1C7F6E9E003056D3 /* WRUT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WRUT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48F6051E1C7F6E9E003056D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48F605201C7F6E9E003056D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +109,9 @@
 				48E30BC01C80E0D200C86272 /* PlayerCollectionCell.swift */,
 				48E30BCA1C835D1800C86272 /* UpdatesCollectionCell.swift */,
 				48F605221C7F6E9E003056D3 /* Main.storyboard */,
+				48E30BE21C867BC100C86272 /* SavedCollectionViewController.swift */,
+				48E30BE01C86760E00C86272 /* SavedListTableViewCell.swift */,
+				48E30BDE1C8675CA00C86272 /* SavedListViewController.swift */,
 				48F605251C7F6E9E003056D3 /* Assets.xcassets */,
 				48E30BC61C82896400C86272 /* Planet.jpg */,
 				48E30BDC1C853FDE00C86272 /* BlackBoard.jpg */,
@@ -186,10 +195,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48E30BDF1C8675CA00C86272 /* SavedListViewController.swift in Sources */,
+				48E30BE11C86760E00C86272 /* SavedListTableViewCell.swift in Sources */,
 				48E30BBD1C80B86400C86272 /* ConnectionManager.swift in Sources */,
 				48E30BC11C80E0D200C86272 /* PlayerCollectionCell.swift in Sources */,
 				48E30BB51C7FB23400C86272 /* ProfileViewController.swift in Sources */,
 				48F605211C7F6E9E003056D3 /* ViewController.swift in Sources */,
+				48E30BE31C867BC100C86272 /* SavedCollectionViewController.swift in Sources */,
 				48E30BBF1C80CC0900C86272 /* OnlineTableCell.swift in Sources */,
 				48E30BCD1C83689100C86272 /* ChooseGameViewController.swift in Sources */,
 				48E30BCF1C84B75600C86272 /* DrawingViewController.swift in Sources */,

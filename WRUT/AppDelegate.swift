@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Saved drawing collection
     var savedDrawingCollection = [AnyObject]()
+    var savedDoodleCollection = [AnyObject]()
     
     var iAmLeader : Bool = false
     

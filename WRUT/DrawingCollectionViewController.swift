@@ -36,6 +36,8 @@ class DrawingCollectionViewController: UIViewController {
     @IBAction func saveDrawingCollection(sender: UIButton) {
         
         self.appDelegate.savedDrawingCollection.append(self.appDelegate.drawingList)
+        
+        //self.appDelegate.savedDoodleCollection.append(self.appDelegate.drawingList)
     }
     
     
