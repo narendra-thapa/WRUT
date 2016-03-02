@@ -19,6 +19,7 @@ class DrawingCollectionViewController: UIViewController {
     @IBOutlet weak var updateLabel: UILabel!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         self.newLeaderSelect.enabled = false
@@ -35,9 +36,11 @@ class DrawingCollectionViewController: UIViewController {
     
     @IBAction func saveDrawingCollection(sender: UIButton) {
         
-        self.appDelegate.savedDrawingCollection.append(self.appDelegate.drawingList)
-        
-        //self.appDelegate.savedDoodleCollection.append(self.appDelegate.drawingList)
+        if appDelegate.gameChoosen == "Doodle" {
+            self.appDelegate.savedDoodleCollection.append(self.appDelegate.drawingList)
+        } else if appDelegate.gameChoosen == "Drawing" {
+            self.appDelegate.savedDrawingCollection.append(self.appDelegate.drawingList)
+        }
     }
     
     
@@ -48,7 +51,6 @@ class DrawingCollectionViewController: UIViewController {
     @IBAction func startNewGame(sender: UIButton) {
         // turn off newGame button off
     }
-    
 }
 
 extension DrawingCollectionViewController : UICollectionViewDataSource {
@@ -74,7 +76,6 @@ extension DrawingCollectionViewController : CSMDrawingSheetDelegate {
     func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String) {
         NSOperationQueue.mainQueue().addOperationWithBlock {
             print("drawing received: \(drawingReceived)")
-            
             if instances == "false" {
                 self.appDelegate.drawingList.append(drawingReceived)
                 self.collectionView.reloadData()

@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var savedDrawingCollection = [AnyObject]()
     var savedDoodleCollection = [AnyObject]()
     
+    var doodleImage = UIImage()
+    
+    var gameChoosen = String()
+    
     var iAmLeader : Bool = false
     
     var drawingList = [UIImage]()

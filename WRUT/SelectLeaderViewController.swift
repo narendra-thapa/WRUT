@@ -32,9 +32,7 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("onlineListCell") as! OnlineTableCell
-        
         cell.nameLabel.text = appDelegate.connectionManager.connectedDevices[indexPath.row].displayName
-        
         return cell
     }
     
@@ -42,10 +40,8 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
         let selectedPeer = appDelegate.connectionManager.connectedDevices[indexPath.row] as MCPeerID
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! OnlineTableCell
         cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-
         newLeaderSelected(selectedPeer)
-        
-        }
+    }
     
     func newLeaderSelected(selectedPeerID: MCPeerID) {
         let alert = UIAlertController(title: "", message: "Confirm", preferredStyle: UIAlertControllerStyle.Alert)
@@ -55,12 +51,10 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
             
             // Activate start button for selected peer
             self.appDelegate.connectionManager.activateStartButton(selectedPeerID)
-            
             self.appDelegate.connectionManager.updateTimelineCollection("Boss: \(selectedPeerID.displayName)")
             self.appDelegate.iAmLeader = false
             self.appDelegate.drawCollectionNewGameButton = false
             self.performSegueWithIdentifier("goingToRootView", sender: self)
-            
         }
         
         let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
@@ -78,7 +72,6 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBAction func goBackButtonPressed(sender: UIButton) {
         print("Go Back Button Pressed")
-        
     }
     
 }

@@ -16,6 +16,7 @@ class SavedListViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var doodleTableView: UITableView!
     
     var selectedItem : Int = 0
+    var selectedTable : Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,28 +38,37 @@ class SavedListViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
-        let cell = drawingTableView.dequeueReusableCellWithIdentifier("savedDrawingListCell") as! SavedListTableViewCell
-        let number = indexPath.row
-        cell.DrawingCollectionNumber.text = "Drawing Game: \(number)"
+        if tableView == drawingTableView {
+            let cell = drawingTableView.dequeueReusableCellWithIdentifier("savedDrawingListCell") as! SavedListTableViewCell
+            let number = indexPath.row + 1
+            cell.DrawingCollectionNumber.text = "Drawing Game: \(number)"
+            return cell
+        }
+        let cell = doodleTableView.dequeueReusableCellWithIdentifier("savedDrawingListCell") as! SavedListTableViewCell
+        let number = indexPath.row + 1
+        cell.DrawingCollectionNumber.text = "Doodling Game: \(number)"
         return cell
-        
-        
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        self.selectedItem = (drawingTableView.indexPathForSelectedRow?.row)!
-
+        if tableView == drawingTableView {
+            self.selectedItem = (drawingTableView.indexPathForSelectedRow?.row)!
+            self.selectedTable = 0
+        } else {
+            self.selectedItem = (doodleTableView.indexPathForSelectedRow?.row)!
+            self.selectedTable = 1
+        }
         self.performSegueWithIdentifier("showCollection", sender: self)
     }
-    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showCollection" {
             let viewController = segue.destinationViewController as! SavedCollectionViewController
+            
             viewController.selectedRow = self.selectedItem
+            viewController.selectedSection = self.selectedTable
+            
         }
     }
     

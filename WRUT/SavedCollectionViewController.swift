@@ -14,17 +14,18 @@ class SavedCollectionViewController: UIViewController, UICollectionViewDataSourc
     
     var imageList = [UIImage]()
     var selectedRow : Int = 0
+    var selectedSection : Int = 0
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.imageList = appDelegate.savedDrawingCollection[selectedRow] as! [UIImage]
-
-     //   self.imageList = appDelegate.savedDoodleCollection[selectedRow] as! [UIImage]
-        
-        // Do any additional setup after loading the view.
+        if self.selectedSection == 0 {
+            self.imageList = appDelegate.savedDrawingCollection[selectedRow] as! [UIImage]
+        } else if self.selectedSection == 1 {
+            self.imageList = appDelegate.savedDoodleCollection[selectedRow] as! [UIImage]
+        }
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

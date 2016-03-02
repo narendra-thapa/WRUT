@@ -15,6 +15,7 @@ class DrawingViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var imageDrawView: UIImageView!
     @IBOutlet weak var timerLabel: UILabel!
+    
     var counter = 5
     var counter2 = 10
     var timer = NSTimer()
@@ -26,23 +27,46 @@ class DrawingViewController: UIViewController {
         
         // start timer and inform others
         timer.invalidate()
+        
+        
+            
 
         if appDelegate.drawingInstance {
+            
+            if appDelegate.gameChoosen == "Doodle" {
+                let image = self.appDelegate.doodleImage
+                self.imageDrawView.image = image
+                
+                let sendDrawing: NSDictionary = ["drawing":image, "first": "doodle"]
+                self.appDelegate.connectionManager.sendImage(sendDrawing)
+                
+                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+                NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+                
+            } else if appDelegate.gameChoosen == "Drawing" {
+            
             self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
             timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+            
+            }
+
+            
         } else {
+            
+            
+            
             let image = self.appDelegate.drawingReceived
             self.imageDrawView.image = image
             timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-        }
-        // Do any additional setup after loading the view.
+            }
+        
+
     }
 
     
     func timerAction() {
-        
         timerLabel.text = "\(counter)"
         --counter
         if (counter == 0) {
@@ -51,7 +75,6 @@ class DrawingViewController: UIViewController {
     }
     
     func timerAction2() {
-        
         timerLabel.text = "\(counter2)"
         --counter2
         if (counter2 == 0) {

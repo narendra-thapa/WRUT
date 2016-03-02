@@ -298,12 +298,24 @@ extension ConnectionManager : MCSessionDelegate {
                     
                     print("\(instance, drawing)")
                     if instance! == "true" {
+                        self.appDelegate.gameChoosen = "Drawing"
                         
                         if self.appDelegate.drawingSourceViewController  {
                             self.delegate?.loadDrawingView(drawing)
                         } else {
                             self.drawingSheetDelegate?.loadDrawingView(drawing)
                         }
+                    } else if instance! == "doodle" {
+                        self.appDelegate.gameChoosen = "Doodle"
+                        
+                        if self.appDelegate.drawingSourceViewController  {
+                            self.delegate?.loadDrawingView(drawing)
+                        } else {
+                            self.drawingSheetDelegate?.loadDrawingView(drawing)
+                        }
+                        
+                    
+                        
                     } else {
                         self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
                     }
