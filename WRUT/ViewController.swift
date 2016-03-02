@@ -41,6 +41,22 @@ class ViewController: UIViewController {
         self.inviteButton.enabled = false
         isAdvertising = false
         
+//        let numberOfPlayers = appDelegate.connectionManager.connectedList.count
+//        if numberOfPlayers == 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == true {
+//            inviteButton.enabled = true
+//            print("1st case")
+//        } else if numberOfPlayers >= 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == false {
+//            inviteButton.enabled = true
+//            print("2nd case")
+//        } else {
+//            inviteButton.enabled = false
+//            print("3rd case \(numberOfPlayers) \(isAdvertising) \(self.appDelegate.connectionManager.acceptance)")
+//        }
+        
+        if appDelegate.iAmLeader {
+            self.inviteButton.enabled = true
+        }
+        
         if let userName = self.defaults.objectForKey("Name") as? String {
             self.profileName = userName
         }
@@ -53,16 +69,18 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        self.inviteButton.enabled = false
+        if appDelegate.iAmLeader {
+            self.inviteButton.enabled = true
+        }
     }
     
     
     @IBAction func unwindToMainMenu(sender: UIStoryboardSegue)
     {
         print("Coming back to root view")
-        self.inviteButton.enabled = true
-        //let sourceViewController = sender.sourceViewController
-        // Pull any data from the view controller which initiated the unwind segue.
+        appDelegate.drawingSourceViewController = true
+
     }
     
     @IBAction func toggleAdvertising(sender: UIBarButtonItem) {
@@ -91,6 +109,7 @@ class ViewController: UIViewController {
                 print("enabling")
             } else {
                 self.inviteButton.enabled = false
+                self.appDelegate.iAmLeader = false
                 self.appDelegate.connectionManager.acceptance = false
                 print("disabling")
             }
@@ -116,17 +135,7 @@ extension ViewController : UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let numberOfPlayers = appDelegate.connectionManager.connectedList.count
-        if numberOfPlayers == 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == true {
-            inviteButton.enabled = true
-            print("1st case")
-        } else if numberOfPlayers >= 0 && isAdvertising == true && self.appDelegate.connectionManager.acceptance == false {
-            inviteButton.enabled = true
-            print("2nd case")
-        } else {
-            inviteButton.enabled = false
-            print("3rd case \(numberOfPlayers) \(isAdvertising) \(self.appDelegate.connectionManager.acceptance)")
-        }
+        
         
         if collectionView == self.collectionView {
         return appDelegate.connectionManager.connectedList.count
@@ -186,7 +195,7 @@ extension ViewController : ConnectionServiceManagerDelegate {
         let alert = UIAlertController(title: "", message: "\(fromPeer) wants to play with you.", preferredStyle: UIAlertControllerStyle.Alert)
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
-            //self.inviteButton.enabled = false
+            self.inviteButton.enabled = false
             self.appDelegate.connectionManager.invitationHandlers(true, self.appDelegate.connectionManager.session)
             self.appDelegate.connectionManager.acceptance = true
             self.navigationController?.popToRootViewControllerAnimated(true)
@@ -208,8 +217,6 @@ extension ViewController : ConnectionServiceManagerDelegate {
     func connectedWithPeer(peerID: MCPeerID) {
         NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
             print("Connected now to peer \(peerID)")
-            
-            
         }
     }
     
@@ -221,6 +228,10 @@ extension ViewController : ConnectionServiceManagerDelegate {
         presentViewController(DVC!, animated: true) { () -> Void in
             print("Okay till here")
         }
+    }
+    
+    func activateInviteButton() {
+        self.inviteButton.enabled = true
     }
     
     

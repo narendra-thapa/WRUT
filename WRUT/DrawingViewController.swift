@@ -15,16 +15,20 @@ class DrawingViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var imageDrawView: UIImageView!
     @IBOutlet weak var timerLabel: UILabel!
-    var counter = 0
-    var counter2 = 0
+    var counter = 5
+    var counter2 = 10
     var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.imageDrawView.image = nil
+        
         // start timer and inform others
-        timer.invalidate() // just in case this button is tapped multiple times
-        // start the timer
+        timer.invalidate()
+
         if appDelegate.drawingInstance {
+            self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
             timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
         } else {
@@ -38,17 +42,19 @@ class DrawingViewController: UIViewController {
 
     
     func timerAction() {
-        ++counter
+        
         timerLabel.text = "\(counter)"
-        if (counter == 5) {
+        --counter
+        if (counter == 0) {
             trigger()
         }
     }
     
     func timerAction2() {
-        ++counter2
+        
         timerLabel.text = "\(counter2)"
-        if (counter2 == 10) {
+        --counter2
+        if (counter2 == 0) {
             trigger2()
         }
     }
@@ -58,10 +64,9 @@ class DrawingViewController: UIViewController {
         UIGraphicsBeginImageContextWithOptions(containerView.bounds.size, false, 0.0)
         containerView.drawViewHierarchyInRect(containerView.bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        //ImageList.append(image)
-        
-        appDelegate.drawingList.append(image)
+
+        self.appDelegate.drawingList.removeAll()
+        self.appDelegate.drawingList.append(image)
         UIGraphicsEndImageContext()
         
         let sendDrawing: NSDictionary = ["drawing":image, "first": "true"]
@@ -71,7 +76,6 @@ class DrawingViewController: UIViewController {
         timer.invalidate()
         
         self.performSegueWithIdentifier("drawingCollection", sender: self)
-        
     }
     
     func trigger2() {
@@ -79,10 +83,10 @@ class DrawingViewController: UIViewController {
         UIGraphicsBeginImageContextWithOptions(containerView.bounds.size, false, 0.0)
         containerView.drawViewHierarchyInRect(containerView.bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        //ImageList.append(image)
-        
-        appDelegate.drawingList.append(image)
+
+        self.appDelegate.drawingList.removeAll()
+        self.appDelegate.drawingList.append(self.appDelegate.drawingReceived)
+        self.appDelegate.drawingList.append(image)
         UIGraphicsEndImageContext()
         
         let sendDrawing: NSDictionary = ["drawing":image, "first": "false"]

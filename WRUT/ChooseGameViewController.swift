@@ -24,6 +24,7 @@ class ChooseGameViewController: UIViewController {
     }
     
     @IBAction func drawingGameChoosen(sender: UIButton) {
+        self.appDelegate.drawingInstance = true
         self.performSegueWithIdentifier("drawingGame", sender: self)
         appDelegate.connectionManager.updateTimelineCollection("\(appDelegate.connectionManager.myPeerId.displayName) has choosen 'Complete My Drawing'")
     }

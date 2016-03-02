@@ -16,6 +16,7 @@ protocol ConnectionServiceManagerDelegate {
     func updatePlayerList()
     func leftCurrentGroup()
     func loadDrawingView(drawingReceived: UIImage)
+    func activateInviteButton()
     
 //    func connectedDevicesChanged(manager : ConnectionManager, connectedDevices: [String])
 //    func colorChanged(manager : ConnectionManager, colorString: String)
@@ -36,10 +37,14 @@ protocol CSMPlayerSelectDelegate {
 protocol CSMDrawingSheetDelegate {
     
     func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String)
-    func activateStartButton()
+    func updateLabel(newUpdate: String)
+    func loadDrawingView(drawingReceived: UIImage)
+    
 }
 
 class ConnectionManager : NSObject {
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     private let ConnectionServiceType = "naren-broadcast"
     
@@ -138,7 +143,6 @@ class ConnectionManager : NSObject {
     
     func sendImage(imageData: NSDictionary) {
         NSLog("%@", "sendImage: \(imageData)")
-        
         let myData = NSKeyedArchiver.archivedDataWithRootObject(imageData)
         
         print("\(self.connectedDevices.count)")
@@ -153,7 +157,6 @@ class ConnectionManager : NSObject {
                 print("Bad quote!")
             }
         }
-        
     }
     
     func activateStartButton(update: MCPeerID) {
@@ -277,42 +280,49 @@ extension ConnectionManager : MCSessionDelegate {
         print("didReceiveData: \(data.length) bytes")
         print("\(peerID.displayName)")
         
-        let myDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! NSDictionary
-        print(myDictionary)
-        
-        if let connectedPlayers = myDictionary["playerList"] as? [MCPeerID] {
-            connectedList.removeAll()
-            connectedList = connectedPlayers
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.delegate?.updatePlayerList()
-                print("Updated List received")
-            })
+        if let myDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSDictionary {
+            print(myDictionary)
             
-        } else if let drawing = myDictionary["drawing"] as? UIImage {
-            let instance = myDictionary["first"] as? String
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                
-                print("\(instance, drawing)")
-                if instance! == "true" {
-                    self.delegate?.loadDrawingView(drawing)
-                    print("Hello")
-                } else {
-                    self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
-                }
-            })
-            
-        } else if let newUpdate = myDictionary["updates"] as? String {
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.updates.append(newUpdate)
-                self.delegate?.updatePlayerList()
-            })
-            
-        } else if let newUpdate = myDictionary["activate"] as? String {
-            if newUpdate == "activate" {
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.drawingSheetDelegate?.activateStartButton()
+            if let connectedPlayers = myDictionary["playerList"] as? [MCPeerID] {
+                connectedList.removeAll()
+                connectedList = connectedPlayers
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.delegate?.updatePlayerList()
+                    print("Updated List received")
                 })
+                
+            } else if let drawing = myDictionary["drawing"] as? UIImage {
+                let instance = myDictionary["first"] as? String
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    print("\(instance, drawing)")
+                    if instance! == "true" {
+                        
+                        if self.appDelegate.drawingSourceViewController  {
+                            self.delegate?.loadDrawingView(drawing)
+                        } else {
+                            self.drawingSheetDelegate?.loadDrawingView(drawing)
+                        }
+                    } else {
+                        self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
+                    }
+                })
+                
+            } else if let newUpdate = myDictionary["updates"] as? String {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.updates.append(newUpdate)
+                    self.delegate?.updatePlayerList()
+                    self.drawingSheetDelegate?.updateLabel(newUpdate)
+                })
+                
+            } else if let newUpdate = myDictionary["activate"] as? String {
+                if newUpdate == "activate" {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.appDelegate.iAmLeader = true
+                        self.delegate?.activateInviteButton()
+                    })
+                }
             }
         }
     }

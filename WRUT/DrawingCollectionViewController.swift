@@ -15,57 +15,37 @@ class DrawingCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var newLeaderSelect: UIButton!
-    @IBOutlet weak var startNewGame: UIButton!
     
     @IBOutlet weak var updateLabel: UILabel!
     
-    //var imagelist = [UIImage]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.newLeaderSelect.enabled = false
-        self.startNewGame.enabled = false
     
         appDelegate.connectionManager.drawingSheetDelegate = self
         
         if appDelegate.drawCollectionNewGameButton {
             self.newLeaderSelect.enabled = true
         }
-        if appDelegate.drawCollectionStartGameButton {
-            self.startNewGame.enabled = true
-        }
+       
+        appDelegate.drawingSourceViewController = false
 
-//    NSNotificationCenter.defaultCenter().addObserverForName("newDrawing", object: nil, queue: NSOperationQueue.mainQueue()) { (NSNotification) -> Void in
-//      //      self.imagelist = self.appDelegate.drawingList
-//            self.collectionView.reloadData()
-//        }
+    }
+    
+    @IBAction func saveDrawingCollection(sender: UIButton) {
+        
+        self.appDelegate.savedDrawingCollection.append(self.appDelegate.drawingList)
     }
     
     
     @IBAction func NewLeaderSelect(sender: UIButton) {
-        
         // turn off newleader button off
-        
     }
     
     @IBAction func startNewGame(sender: UIButton) {
-        
-//        self.dismissViewControllerAnimated(true) { () -> Void in
-//            print("Going back once")
-//        }
-//        self.dismissViewControllerAnimated(true) { () -> Void in
-//            print("Going back twice")
-//        }
-        
-        
-        
-        
         // turn off newGame button off
-        
     }
-    
-    
-    
     
 }
 
@@ -76,13 +56,11 @@ extension DrawingCollectionViewController : UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //return imagelist.count
         return self.appDelegate.drawingList.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("drawingImageCell", forIndexPath: indexPath) as! DrawingCollectionViewCell
-        //let image = imagelist[indexPath.row]
         let image = self.appDelegate.drawingList[indexPath.row]
         cell.imageView.image = image
         return cell
@@ -97,14 +75,23 @@ extension DrawingCollectionViewController : CSMDrawingSheetDelegate {
             
             if instances == "false" {
                 self.appDelegate.drawingList.append(drawingReceived)
-    //            NSNotificationCenter.defaultCenter().postNotificationName("newDrawing", object: nil)
                 self.collectionView.reloadData()
             }
         }
     }
     
-    func activateStartButton() {
-        self.startNewGame.enabled = true
+    func updateLabel(newUpdate: String) {
+        self.updateLabel.text = newUpdate
+    }
+    
+    func loadDrawingView(drawingReceived: UIImage) {
+        self.appDelegate.drawingInstance = false
+        self.appDelegate.drawingReceived = drawingReceived
+        self.appDelegate.drawingList.append(drawingReceived)
+        let DVC = storyboard?.instantiateViewControllerWithIdentifier("drawingView") as? DrawingViewController
+        presentViewController(DVC!, animated: true) { () -> Void in
+            print("Okay till here")
+        }
     }
     
 }

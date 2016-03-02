@@ -14,6 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var drawCollectionNewGameButton: Bool = false
     var drawCollectionStartGameButton: Bool = false
 
+    var drawingSourceViewController: Bool = true
+    
+    // Saved drawing collection
+    var savedDrawingCollection = [AnyObject]()
+    
+    var iAmLeader : Bool = false
+    
     var drawingList = [UIImage]()
     
     var drawingReceived = UIImage()

@@ -42,20 +42,44 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
         let selectedPeer = appDelegate.connectionManager.connectedDevices[indexPath.row] as MCPeerID
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! OnlineTableCell
         cell.accessoryType = UITableViewCellAccessoryType.Checkmark
-    
-        // Activate start button for selected peer
-        self.appDelegate.connectionManager.activateStartButton(selectedPeer)
-        
-        self.goBackButton.enabled = true
+
+        newLeaderSelected(selectedPeer)
         
         }
+    
+    func newLeaderSelected(selectedPeerID: MCPeerID) {
+        let alert = UIAlertController(title: "", message: "Confirm", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let acceptAction: UIAlertAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            print("Selected")
+            
+            // Activate start button for selected peer
+            self.appDelegate.connectionManager.activateStartButton(selectedPeerID)
+            
+            self.appDelegate.connectionManager.updateTimelineCollection("Boss: \(selectedPeerID.displayName)")
+            self.appDelegate.iAmLeader = false
+            self.appDelegate.drawCollectionNewGameButton = false
+            self.performSegueWithIdentifier("goingToRootView", sender: self)
+            
+        }
+        
+        let declineAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alertAction) -> Void in
+            print("Rejected")
+        }
+        
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock { () -> Void in
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+    }
     
     @IBAction func goBackButtonPressed(sender: UIButton) {
         print("Go Back Button Pressed")
         
     }
-    
-    
     
 }
 

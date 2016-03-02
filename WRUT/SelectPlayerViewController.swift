@@ -71,7 +71,6 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "chooseGame" {
-            //let detailVC = segue.destinationViewController as! ChooseGameViewController
             if var profileName = defaults.objectForKey("Name") as? String {
                 if profileName.isEmpty {
                     profileName = appDelegate.connectionManager.myPeerId.displayName
@@ -96,6 +95,7 @@ extension SelectPlayerViewController : UICollectionViewDataSource {
             startGameButton.enabled = false
         } else {
             startGameButton.enabled = true
+            self.appDelegate.iAmLeader = true
         }
         return appDelegate.connectionManager.connectedDevices.count
     }
