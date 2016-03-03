@@ -18,6 +18,7 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var connectedPlayersFlowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var startGameButton: UIBarButtonItem!
     
     var userName = NSData()
@@ -28,6 +29,8 @@ class SelectPlayerViewController: UIViewController, UITableViewDataSource, UITab
         appDelegate.restrictRotation = true
         
         appDelegate.connectionManager.playerSelectDelegate = self
+        
+        self.connectedPlayersFlowLayout.estimatedItemSize = CGSize (width: 50, height: 20)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

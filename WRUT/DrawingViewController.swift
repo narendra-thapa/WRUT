@@ -32,6 +32,9 @@ class DrawingViewController: UIViewController {
         
         self.imageDrawView.image = nil
         
+//        timerLabel.adjustsFontSizeToFitWidth = true
+//        timerLabel.minimumScaleFactor = 0.2
+        
         // start timer and inform others
         timer.invalidate()
         
@@ -98,6 +101,7 @@ class DrawingViewController: UIViewController {
     }
     
     func timerAction() {
+        
         timerLabel.text = "\(counter)"
         --counter
         if (counter == 0) {
@@ -106,6 +110,7 @@ class DrawingViewController: UIViewController {
     }
     
     func timerAction2() {
+        
         timerLabel.text = "\(counter2)"
         --counter2
         if (counter2 == 0) {
@@ -114,6 +119,7 @@ class DrawingViewController: UIViewController {
     }
     
     func timerAction3() {
+        
         timerLabel.text = "\(counter3)"
         --counter3
         if (counter3 == 0) {
