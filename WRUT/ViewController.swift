@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.inviteButton.enabled = false
+        
         if appDelegate.iAmLeader {
             self.inviteButton.enabled = true
         }
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     {
         print("Coming back to root view")
         appDelegate.drawingSourceViewController = true
-
+        self.inviteButton.enabled = false
     }
     
     @IBAction func toggleAdvertising(sender: UIBarButtonItem) {

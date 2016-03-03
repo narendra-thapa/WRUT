@@ -24,57 +24,76 @@ class DrawingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if appDelegate.iAmLeader {
+            appDelegate.drawingInstance = true
+        }
+        
         appDelegate.restrictRotation = false
         
         self.imageDrawView.image = nil
         
         // start timer and inform others
         timer.invalidate()
-
-        if appDelegate.drawingInstance {
+        
+        if appDelegate.gameChoosen == "Drawing" {
             
-            if appDelegate.gameChoosen == "Doodle" {
-                let image = self.appDelegate.doodleImage
-                
-                let width = self.appDelegate.doodleImage.size.width
-                let height = self.appDelegate.doodleImage.size.height
-                
-                self.imageDrawView.frame.size.width = width
-                self.imageDrawView.frame.size.height = height
-                
-                self.imageDrawView.image = image
-                
-                let sendDrawing: NSDictionary = ["drawing":image, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
-                self.appDelegate.connectionManager.sendImage(sendDrawing)
-                
-                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction3", userInfo: nil, repeats: true)
+            if appDelegate.drawingInstance {
+                self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
+                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
                 NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-                
-            } else if appDelegate.gameChoosen == "Drawing" {
-                
-                if appDelegate.drawingInstance == true {
-                    
-                    self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
-                    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
-                    NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-                    
-                } else {
-                    
-                    let image = self.appDelegate.drawingReceived
-                    self.imageDrawView.image = image.image
-                    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
-                    NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-                }
+            } else {
+                let image = self.appDelegate.drawingReceived
+                self.imageDrawView.image = image.image
+                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+                NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
             }
-            
-        } else {
-            
-            let image = self.appDelegate.drawingReceived
-            self.imageDrawView.image = image.image
-            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
-            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-            
         }
+        
+        if appDelegate.gameChoosen == "Doodle" {
+            let image = self.appDelegate.doodleImage
+            let width = self.appDelegate.doodleImage.size.width
+            let height = self.appDelegate.doodleImage.size.height
+            
+            self.imageDrawView.frame.size.width = width
+            self.imageDrawView.frame.size.height = height
+            self.imageDrawView.image = image
+            
+            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction3", userInfo: nil, repeats: true)
+            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        }
+        
+        
+//        if appDelegate.drawingInstance {
+//            if appDelegate.gameChoosen == "Doodle" {
+//                let image = self.appDelegate.doodleImage
+//                let width = self.appDelegate.doodleImage.size.width
+//                let height = self.appDelegate.doodleImage.size.height
+//                self.imageDrawView.frame.size.width = width
+//                self.imageDrawView.frame.size.height = height
+//                self.imageDrawView.image = image
+//                let sendDrawing: NSDictionary = ["drawing":image, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
+//                self.appDelegate.connectionManager.sendImage(sendDrawing)
+//                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction3", userInfo: nil, repeats: true)
+//                NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+//                
+//            } else if appDelegate.gameChoosen == "Drawing" {
+//                    if appDelegate.drawingInstance == true {
+//                    self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
+//                    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
+//                    NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+//                } else {
+//                    let image = self.appDelegate.drawingReceived
+//                    self.imageDrawView.image = image.image
+//                    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+//                    NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+//                }
+//            }
+//        } else {
+//            let image = self.appDelegate.drawingReceived
+//            self.imageDrawView.image = image.image
+//            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+//            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+//        }
     
     }
     

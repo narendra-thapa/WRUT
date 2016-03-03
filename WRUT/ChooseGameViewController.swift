@@ -94,6 +94,10 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         
         self.appDelegate.doodleImage = scaledImage!
         self.appDelegate.gameChoosen = "Doodle"
+        self.appDelegate.drawingReceived = GameItem(image: self.appDelegate.doodleImage, owner: appDelegate.connectionManager.myPeerId.displayName)
+        let sendDrawing: NSDictionary = ["drawing": self.appDelegate.doodleImage, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
+        self.appDelegate.connectionManager.sendImage(sendDrawing)
+        
         self.performSegueWithIdentifier("drawingGame", sender: self)
     }
     

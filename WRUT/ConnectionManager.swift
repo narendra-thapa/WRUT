@@ -153,7 +153,7 @@ class ConnectionManager : NSObject {
         if self.connectedDevices.count > 0 {
             do {
                 try self.session.sendData(myData, toPeers: self.connectedDevices,
-                    withMode: MCSessionSendDataMode.Unreliable)
+                    withMode: MCSessionSendDataMode.Reliable)
             } catch {
                 // do something.
                 print("Bad quote!")
@@ -312,13 +312,13 @@ extension ConnectionManager : MCSessionDelegate {
                     } else if instance! == "doodle" {
                         self.appDelegate.gameChoosen = "Doodle"
                         
+                        self.appDelegate.doodleImage = drawing
+                        
                         if self.appDelegate.drawingSourceViewController  {
                             self.delegate?.loadDrawingView(gameItemReceived)
                         } else {
                             self.drawingSheetDelegate?.loadDrawingView(gameItemReceived)
                         }
-                        
-                    
                         
                     } else {
                         self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!, owner: sender!)
