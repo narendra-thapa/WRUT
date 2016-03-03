@@ -15,7 +15,7 @@ protocol ConnectionServiceManagerDelegate {
     func connectedWithPeer(peerID: MCPeerID)
     func updatePlayerList()
     func leftCurrentGroup()
-    func loadDrawingView(drawingReceived: UIImage)
+    func loadDrawingView(gameItem: GameItem)
     func activateInviteButton()
     
 //    func connectedDevicesChanged(manager : ConnectionManager, connectedDevices: [String])
@@ -36,9 +36,9 @@ protocol CSMPlayerSelectDelegate {
 
 protocol CSMDrawingSheetDelegate {
     
-    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String)
+    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String, owner: String)
     func updateLabel(newUpdate: String)
-    func loadDrawingView(drawingReceived: UIImage)
+    func loadDrawingView(gameItem: GameItem)
     
 }
 
@@ -295,31 +295,33 @@ extension ConnectionManager : MCSessionDelegate {
                 
             } else if let drawing = myDictionary["drawing"] as? UIImage {
                 let instance = myDictionary["first"] as? String
+                let sender = myDictionary["sender"] as? String
+                let gameItemReceived = GameItem(image: drawing, owner: sender!)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
-                    print("\(instance, drawing)")
-                    if instance! == "true" {
+                    print("\(instance, drawing, sender)")
+                    if instance! == "first" {
                         self.appDelegate.gameChoosen = "Drawing"
                         
                         if self.appDelegate.drawingSourceViewController  {
-                            self.delegate?.loadDrawingView(drawing)
+                            self.delegate?.loadDrawingView(gameItemReceived)
                         } else {
-                            self.drawingSheetDelegate?.loadDrawingView(drawing)
+                            self.drawingSheetDelegate?.loadDrawingView(gameItemReceived)
                         }
                     } else if instance! == "doodle" {
                         self.appDelegate.gameChoosen = "Doodle"
                         
                         if self.appDelegate.drawingSourceViewController  {
-                            self.delegate?.loadDrawingView(drawing)
+                            self.delegate?.loadDrawingView(gameItemReceived)
                         } else {
-                            self.drawingSheetDelegate?.loadDrawingView(drawing)
+                            self.drawingSheetDelegate?.loadDrawingView(gameItemReceived)
                         }
                         
                     
                         
                     } else {
-                        self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!)
+                        self.drawingSheetDelegate?.drawingReceived(self, drawingReceived: drawing, instances: instance!, owner: sender!)
                     }
                 })
                 

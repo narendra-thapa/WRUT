@@ -55,7 +55,7 @@ class SelectLeaderViewController: UIViewController, UITableViewDataSource, UITab
             self.appDelegate.connectionManager.activateStartButton(selectedPeerID)
             self.appDelegate.connectionManager.updateTimelineCollection("Boss: \(selectedPeerID.displayName)")
             self.appDelegate.iAmLeader = false
-            self.appDelegate.drawCollectionNewGameButton = false
+     //       self.appDelegate.drawCollectionNewGameButton = false
             self.performSegueWithIdentifier("goingToRootView", sender: self)
         }
         

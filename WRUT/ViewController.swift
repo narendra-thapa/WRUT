@@ -222,10 +222,10 @@ extension ViewController : ConnectionServiceManagerDelegate {
         }
     }
     
-    func loadDrawingView(drawingReceived: UIImage) {
+    func loadDrawingView(gameItem: GameItem) {
         self.appDelegate.drawingInstance = false
-        self.appDelegate.drawingReceived = drawingReceived
-        self.appDelegate.drawingList.append(drawingReceived)
+        self.appDelegate.drawingReceived = gameItem
+        self.appDelegate.drawingList.append(gameItem)
         let DVC = storyboard?.instantiateViewControllerWithIdentifier("drawingView") as? DrawingViewController
         presentViewController(DVC!, animated: true) { () -> Void in
             print("Okay till here")

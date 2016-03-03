@@ -57,6 +57,12 @@ class DrawingCollectionViewController: UIViewController {
     @IBAction func startNewGame(sender: UIButton) {
         // turn off newGame button off
     }
+    
+    @IBAction func refreshCollection(sender: UIButton) {
+        self.collectionView.reloadData()
+    }
+
+    
 }
 
 extension DrawingCollectionViewController : UICollectionViewDataSource {
@@ -70,20 +76,23 @@ extension DrawingCollectionViewController : UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("drawingImageCell", forIndexPath: indexPath) as! DrawingCollectionViewCell
-        let image = self.appDelegate.drawingList[indexPath.row]
-        cell.imageView.image = image
+        let image = self.appDelegate.drawingList[indexPath.row] 
+        cell.imageView.image = image.image
+        cell.ownerName.text = image.owner
         return cell
     }
 }
 
 extension DrawingCollectionViewController : CSMDrawingSheetDelegate {
     
-    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String) {
+    func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String, owner: String) {
         NSOperationQueue.mainQueue().addOperationWithBlock {
             print("drawing received: \(drawingReceived)")
-            if instances == "false" {
-                self.appDelegate.drawingList.append(drawingReceived)
+            if instances == "second" {
+                let gameItem = GameItem(image: drawingReceived, owner: owner)
+                self.appDelegate.drawingList.append(gameItem)
                 self.collectionView.reloadData()
             }
         }
@@ -93,10 +102,10 @@ extension DrawingCollectionViewController : CSMDrawingSheetDelegate {
         self.updateLabel.text = newUpdate
     }
     
-    func loadDrawingView(drawingReceived: UIImage) {
+    func loadDrawingView(gameItem: GameItem) {
         self.appDelegate.drawingInstance = false
-        self.appDelegate.drawingReceived = drawingReceived
-        self.appDelegate.drawingList.append(drawingReceived)
+        self.appDelegate.drawingReceived = gameItem
+        self.appDelegate.drawingList.append(gameItem)
         let DVC = storyboard?.instantiateViewControllerWithIdentifier("drawingView") as? DrawingViewController
         presentViewController(DVC!, animated: true) { () -> Void in
             print("Okay till here")

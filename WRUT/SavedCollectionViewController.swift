@@ -12,7 +12,7 @@ class SavedCollectionViewController: UIViewController, UICollectionViewDataSourc
 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    var imageList = [UIImage]()
+    var imageList = [GameItem]()
     var selectedRow : Int = 0
     var selectedSection : Int = 0
     
@@ -24,9 +24,9 @@ class SavedCollectionViewController: UIViewController, UICollectionViewDataSourc
         appDelegate.restrictRotation = true
         
         if self.selectedSection == 0 {
-            self.imageList = appDelegate.savedDrawingCollection[selectedRow] as! [UIImage]
+            self.imageList = appDelegate.savedDrawingCollection[selectedRow] as! [GameItem]
         } else if self.selectedSection == 1 {
-            self.imageList = appDelegate.savedDoodleCollection[selectedRow] as! [UIImage]
+            self.imageList = appDelegate.savedDoodleCollection[selectedRow] as! [GameItem]
         }
     }
     
@@ -41,7 +41,8 @@ class SavedCollectionViewController: UIViewController, UICollectionViewDataSourc
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("drawingImageCell", forIndexPath: indexPath) as! DrawingCollectionViewCell
         let image = self.imageList[indexPath.row]
-        cell.imageView.image = image
+        cell.imageView.image = image.image
+        cell.ownerName.text = image.owner
         return cell
     }
 

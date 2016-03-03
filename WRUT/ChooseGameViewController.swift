@@ -33,6 +33,7 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBAction func drawOverThePicture(sender: UIButton) {
         self.appDelegate.drawingInstance = true
+        self.appDelegate.gameChoosen = "Doodle"
         appDelegate.connectionManager.updateTimelineCollection("\(appDelegate.connectionManager.myPeerId.displayName) has choosen 'Doodle my Picture'")
         
         let alert = UIAlertController(title: "", message: "Select Photo Source", preferredStyle: UIAlertControllerStyle.Alert)
@@ -76,7 +77,22 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         //    profileImageView.contentMode = .ScaleAspectFill
        // let editImage = info[UIImagePickerControllerEditedImage] as? UIImage
         let editImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        self.appDelegate.doodleImage = editImage!
+        print("editImage Size - Original \(editImage?.size)")
+        let size = CGSizeApplyAffineTransform(editImage!.size, CGAffineTransformMakeScale(0.3, 0.3))
+        
+        let hasAlpha = false
+        let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+        
+        UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+        editImage!.drawInRect(CGRect(origin: CGPointZero, size: size))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        print("editImage Size - Original \(scaledImage?.size)")
+        
+        UIGraphicsEndImageContext()
+        
+        self.appDelegate.doodleImage = scaledImage!
         self.appDelegate.gameChoosen = "Doodle"
         self.performSegueWithIdentifier("drawingGame", sender: self)
     }

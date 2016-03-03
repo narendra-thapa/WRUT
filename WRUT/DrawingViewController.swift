@@ -44,29 +44,39 @@ class DrawingViewController: UIViewController {
                 
                 self.imageDrawView.image = image
                 
-                let sendDrawing: NSDictionary = ["drawing":image, "first": "doodle"]
+                let sendDrawing: NSDictionary = ["drawing":image, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
                 self.appDelegate.connectionManager.sendImage(sendDrawing)
                 
                 timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction3", userInfo: nil, repeats: true)
                 NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
                 
             } else if appDelegate.gameChoosen == "Drawing" {
-            
-            self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
-            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
-            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
-            
+                
+                if appDelegate.drawingInstance == true {
+                    
+                    self.imageDrawView.image = UIImage(named: "BlackBoard.jpg")
+                    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction", userInfo: nil, repeats: true)
+                    NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+                    
+                } else {
+                    
+                    let image = self.appDelegate.drawingReceived
+                    self.imageDrawView.image = image.image
+                    timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
+                    NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+                }
             }
-
+            
         } else {
             
             let image = self.appDelegate.drawingReceived
-            self.imageDrawView.image = image
+            self.imageDrawView.image = image.image
             timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "timerAction2", userInfo: nil, repeats: true)
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+            
         }
+    
     }
-
     
     func timerAction() {
         timerLabel.text = "\(counter)"
@@ -96,15 +106,20 @@ class DrawingViewController: UIViewController {
         
         UIGraphicsBeginImageContextWithOptions(containerView.bounds.size, false, 0.0)
         containerView.drawViewHierarchyInRect(containerView.bounds, afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-
-        self.appDelegate.drawingList.removeAll()
-        self.appDelegate.drawingList.append(image)
+        let imageOfDrawing = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+    
+        print("First image size :\(imageOfDrawing.size)")
         
-        let sendDrawing: NSDictionary = ["drawing":image, "first": "true"]
+        self.appDelegate.drawingList.removeAll()
+        let myDrawing = GameItem(image: imageOfDrawing, owner: appDelegate.connectionManager.myPeerId.displayName)
+        self.appDelegate.drawingList.append(myDrawing)
+        
+        let sendDrawing: NSDictionary = ["drawing":imageOfDrawing, "first": "first", "sender" : appDelegate.connectionManager.myPeerId.displayName]
+        
         self.appDelegate.connectionManager.sendImage(sendDrawing)
-        self.appDelegate.drawCollectionNewGameButton = true
+        
+  //      self.appDelegate.drawCollectionNewGameButton = true
 
         timer.invalidate()
         
@@ -115,14 +130,20 @@ class DrawingViewController: UIViewController {
         
         UIGraphicsBeginImageContextWithOptions(containerView.bounds.size, false, 0.0)
         containerView.drawViewHierarchyInRect(containerView.bounds, afterScreenUpdates: true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        let imageOfDrawing = UIGraphicsGetImageFromCurrentImageContext()
 
-        self.appDelegate.drawingList.removeAll()
-        self.appDelegate.drawingList.append(self.appDelegate.drawingReceived)
-        self.appDelegate.drawingList.append(image)
         UIGraphicsEndImageContext()
         
-        let sendDrawing: NSDictionary = ["drawing":image, "first": "false"]
+        print("Second image size :\(imageOfDrawing.size)")
+        
+        self.appDelegate.drawingList.removeAll()
+        self.appDelegate.drawingList.append(self.appDelegate.drawingReceived)
+        
+        let myDrawing = GameItem(image: imageOfDrawing, owner: appDelegate.connectionManager.myPeerId.displayName)
+        self.appDelegate.drawingList.append(myDrawing)
+        
+        
+        let sendDrawing: NSDictionary = ["drawing":imageOfDrawing, "first": "second", "sender":appDelegate.connectionManager.myPeerId.displayName]
         self.appDelegate.connectionManager.sendImage(sendDrawing)
         
         timer.invalidate()
@@ -131,10 +152,3 @@ class DrawingViewController: UIViewController {
     }
     
 }
-
-
-
-
-
-
-
