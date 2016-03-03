@@ -500,6 +500,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cured-chalkboard-wall.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="pZO-Y2-Upy">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LBH-te-Eec">
                                 <rect key="frame" x="200" y="140" width="200" height="200"/>
                                 <constraints>
@@ -509,21 +512,27 @@
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="epL-ZI-Eyj">
                                 <rect key="frame" x="20" y="380" width="560" height="30"/>
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="0.55379849137931036" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="llD-bU-PbU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" keyboardType="namePhonePad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="q5O-ei-HhJ" firstAttribute="top" secondItem="pZO-Y2-Upy" secondAttribute="bottom" id="2Jr-Lq-LsY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="epL-ZI-Eyj" secondAttribute="trailing" id="3ZP-G5-IIk"/>
+                            <constraint firstItem="pZO-Y2-Upy" firstAttribute="top" secondItem="YQU-Sx-oGD" secondAttribute="topMargin" id="AYO-Fj-1dW"/>
+                            <constraint firstItem="pZO-Y2-Upy" firstAttribute="leading" secondItem="YQU-Sx-oGD" secondAttribute="leadingMargin" constant="-20" id="Bmv-yA-WdN"/>
                             <constraint firstItem="LBH-te-Eec" firstAttribute="centerY" secondItem="YQU-Sx-oGD" secondAttribute="centerY" multiplier="0.8" id="DIk-CI-ave"/>
                             <constraint firstAttribute="leadingMargin" secondItem="epL-ZI-Eyj" secondAttribute="leading" id="XPw-5P-Wz0"/>
                             <constraint firstItem="epL-ZI-Eyj" firstAttribute="centerX" secondItem="YQU-Sx-oGD" secondAttribute="centerX" id="adO-JV-TFd"/>
                             <constraint firstItem="epL-ZI-Eyj" firstAttribute="top" secondItem="LBH-te-Eec" secondAttribute="bottom" constant="40" id="gv7-Bn-4Yr"/>
                             <constraint firstItem="LBH-te-Eec" firstAttribute="centerY" secondItem="RAe-Wv-dvP" secondAttribute="bottom" constant="40" id="pgO-8G-4rb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pZO-Y2-Upy" secondAttribute="trailing" constant="-20" id="v9E-VE-N97"/>
                             <constraint firstItem="LBH-te-Eec" firstAttribute="centerX" secondItem="YQU-Sx-oGD" secondAttribute="centerX" id="y2F-NM-ewg"/>
                         </constraints>
                         <variation key="default">
@@ -842,7 +851,7 @@
                                     <constraint firstAttribute="width" constant="44" id="DXz-Xo-UYZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>

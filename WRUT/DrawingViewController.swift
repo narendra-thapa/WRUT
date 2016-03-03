@@ -140,11 +140,13 @@ class DrawingViewController: UIViewController {
         let myDrawing = GameItem(image: imageOfDrawing, owner: appDelegate.connectionManager.myPeerId.displayName)
         self.appDelegate.drawingList.append(myDrawing)
         
-        let sendDrawing: NSDictionary = ["drawing":imageOfDrawing, "first": "first", "sender" : appDelegate.connectionManager.myPeerId.displayName]
+    //    let newImage = imageOfDrawing!.lowestQualityJPEGNSData /// new line
+        let sendImage = UIImage(data: imageOfDrawing!.lowestQualityJPEGNSData)
         
+        print("First image size after compression:\(sendImage!.size)")
+        
+        let sendDrawing: NSDictionary = ["drawing":sendImage!, "first": "first", "sender" : appDelegate.connectionManager.myPeerId.displayName]
         self.appDelegate.connectionManager.sendImage(sendDrawing)
-        
-  //      self.appDelegate.drawCollectionNewGameButton = true
 
         timer.invalidate()
         
@@ -167,8 +169,11 @@ class DrawingViewController: UIViewController {
         let myDrawing = GameItem(image: imageOfDrawing, owner: appDelegate.connectionManager.myPeerId.displayName)
         self.appDelegate.drawingList.append(myDrawing)
         
+   //     let newImage = imageOfDrawing!.lowestQualityJPEGNSData /// new line
+        let sendImage = UIImage(data: imageOfDrawing!.lowestQualityJPEGNSData)
+        print("Second image size after compression:\(sendImage!.size)")
         
-        let sendDrawing: NSDictionary = ["drawing":imageOfDrawing, "first": "second", "sender":appDelegate.connectionManager.myPeerId.displayName]
+        let sendDrawing: NSDictionary = ["drawing":sendImage!, "first": "second", "sender":appDelegate.connectionManager.myPeerId.displayName]
         self.appDelegate.connectionManager.sendImage(sendDrawing)
         
         timer.invalidate()

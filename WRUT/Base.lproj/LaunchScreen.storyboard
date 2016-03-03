@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PC021909.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="4qN-f8-p9o">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PC021909.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="4qN-f8-p9o">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WRUT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xp6-z8-6YD">
@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="width" constant="175" id="b7t-cd-2GI"/>
                                     <constraint firstAttribute="height" constant="55" id="t6j-xf-6yS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="50"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -49,6 +49,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="PC021909.JPG" width="500" height="346"/>
+        <image name="PC021909.jpg" width="417" height="289"/>
     </resources>
 </document>

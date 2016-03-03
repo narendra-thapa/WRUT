@@ -10,16 +10,8 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-  //  var drawCollectionNewGameButton: Bool = false
-  //  var drawCollectionStartGameButton: Bool = false
 
     var drawingSourceViewController: Bool = true
-    
-//    struct GameItem {
-//        let image: UIImage
-//        let owner: String
-//    }
     
     // Restrict Rotation for all but only draw view
     var restrictRotation : Bool = true
@@ -80,7 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return UIInterfaceOrientationMask.Landscape
         }
     }
-
-
+    
 }
 

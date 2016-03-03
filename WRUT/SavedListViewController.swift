@@ -72,6 +72,4 @@ class SavedListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    
-    
 }

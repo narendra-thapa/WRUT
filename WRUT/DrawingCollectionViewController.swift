@@ -13,9 +13,7 @@ class DrawingCollectionViewController: UIViewController {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var newLeaderSelect: UIButton!
-    
     @IBOutlet weak var updateLabel: UILabel!
     
     override func viewDidLoad() {
@@ -23,17 +21,15 @@ class DrawingCollectionViewController: UIViewController {
         super.viewDidLoad()
         
         self.newLeaderSelect.enabled = false
+        self.newLeaderSelect.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
         
         appDelegate.restrictRotation = true
     
         appDelegate.connectionManager.drawingSheetDelegate = self
-        
-//        if appDelegate.drawCollectionNewGameButton {
-//            self.newLeaderSelect.enabled = true
-//        }
        
         if appDelegate.iAmLeader {
             self.newLeaderSelect.enabled = true
+            self.newLeaderSelect.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.5)
         }
         
         appDelegate.drawingSourceViewController = false

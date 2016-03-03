@@ -38,7 +38,10 @@ class ViewController: UIViewController {
 
         connectionService.delegate = self
         appDelegate.connectionManager.delegate = self
+        
         self.inviteButton.enabled = false
+        self.inviteButton.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.4)
+
         isAdvertising = false
         
 //        let numberOfPlayers = appDelegate.connectionManager.connectedList.count
@@ -57,6 +60,7 @@ class ViewController: UIViewController {
         
         if appDelegate.iAmLeader {
             self.inviteButton.enabled = true
+            self.inviteButton.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.4)
         }
         
         if let userName = self.defaults.objectForKey("Name") as? String {
@@ -74,6 +78,7 @@ class ViewController: UIViewController {
         
         if appDelegate.iAmLeader {
             self.inviteButton.enabled = true
+            self.inviteButton.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.4)
         }
     }
     
@@ -83,6 +88,7 @@ class ViewController: UIViewController {
         print("Coming back to root view")
         appDelegate.drawingSourceViewController = true
         self.inviteButton.enabled = false
+        self.inviteButton.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.4)
     }
     
     @IBAction func toggleAdvertising(sender: UIBarButtonItem) {
@@ -98,20 +104,22 @@ class ViewController: UIViewController {
         let visibilityAction: UIAlertAction = UIAlertAction(title: actionTitle, style: UIAlertActionStyle.Default) { (alertAction) -> Void in
             if self.isAdvertising == true {
                 self.appDelegate.connectionManager.serviceAdvertiser.stopAdvertisingPeer()
-                self.statusView.backgroundColor = UIColor.redColor()
+                self.statusView.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
                 self.appDelegate.connectionManager.session.disconnect()
             } else {
                 self.appDelegate.connectionManager.serviceAdvertiser.startAdvertisingPeer()
-                self.statusView.backgroundColor = UIColor.greenColor()
+                self.statusView.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.5)
             }
             self.isAdvertising = !self.isAdvertising
             
             if self.isAdvertising == true {
                 self.inviteButton.enabled = true
+                self.inviteButton.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.4)
                 print("enabling")
             } else {
-                self.inviteButton.enabled = false
                 self.appDelegate.iAmLeader = false
+                self.inviteButton.enabled = false
+                self.inviteButton.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.4)
                 self.appDelegate.connectionManager.acceptance = false
                 print("disabling")
             }
@@ -198,6 +206,7 @@ extension ViewController : ConnectionServiceManagerDelegate {
         
         let acceptAction: UIAlertAction = UIAlertAction(title: "Accept", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
             self.inviteButton.enabled = false
+            self.inviteButton.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.4)
             self.appDelegate.connectionManager.invitationHandlers(true, self.appDelegate.connectionManager.session)
             self.appDelegate.connectionManager.acceptance = true
             self.navigationController?.popToRootViewControllerAnimated(true)
@@ -234,6 +243,7 @@ extension ViewController : ConnectionServiceManagerDelegate {
     
     func activateInviteButton() {
         self.inviteButton.enabled = true
+        self.inviteButton.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.4)
     }
     
     

@@ -144,8 +144,10 @@ class ConnectionManager : NSObject {
     }
     
     func sendImage(imageData: NSDictionary) {
-        NSLog("%@", "sendImage: \(imageData)")
+        //NSLog("%@", "sendImage: \(imageData)")
+        
         let myData = NSKeyedArchiver.archivedDataWithRootObject(imageData)
+        print("didSendData: \(myData.length) bytes")
         
         print("\(self.connectedDevices.count)")
         print("\(self.connectedDevices)")
@@ -283,9 +285,11 @@ extension ConnectionManager : MCSessionDelegate {
         print("\(peerID.displayName)")
         
         if let myDictionary = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSDictionary {
-            print(myDictionary)
+            //print(myDictionary)
+            print("Dictionary extracted")
             
             if let connectedPlayers = myDictionary["playerList"] as? [MCPeerID] {
+                print("playerList")
                 connectedList.removeAll()
                 connectedList = connectedPlayers
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -294,15 +298,22 @@ extension ConnectionManager : MCSessionDelegate {
                 })
                 
             } else if let drawing = myDictionary["drawing"] as? UIImage {
+                print("drawing")
+             //   let drawing = NSKeyedUnarchiver.unarchiveObjectWithData(NSdrawing) as? UIImage
+             //   let drawing = UIImage(data: NSdrawing)
+                
                 let instance = myDictionary["first"] as? String
                 let sender = myDictionary["sender"] as? String
                 let gameItemReceived = GameItem(image: drawing, owner: sender!)
                 
+                print("Dispatching")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
                     print("\(instance, drawing, sender)")
                     if instance! == "first" {
                         self.appDelegate.gameChoosen = "Drawing"
+                        
+                        print("drawing")
                         
                         if self.appDelegate.drawingSourceViewController  {
                             self.delegate?.loadDrawingView(gameItemReceived)
@@ -311,6 +322,8 @@ extension ConnectionManager : MCSessionDelegate {
                         }
                     } else if instance! == "doodle" {
                         self.appDelegate.gameChoosen = "Doodle"
+                        
+                        print("doodling")
                         
                         self.appDelegate.doodleImage = drawing
                         
@@ -326,19 +339,24 @@ extension ConnectionManager : MCSessionDelegate {
                 })
                 
             } else if let newUpdate = myDictionary["updates"] as? String {
+                print("updates")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.updates.append(newUpdate)
                     self.delegate?.updatePlayerList()
                     self.drawingSheetDelegate?.updateLabel(newUpdate)
+                    
                 })
                 
             } else if let newUpdate = myDictionary["activate"] as? String {
+                print("activate")
                 if newUpdate == "activate" {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.appDelegate.iAmLeader = true
                         self.delegate?.activateInviteButton()
                     })
                 }
+            } else {
+                print("Dictionary useless")
             }
         }
     }

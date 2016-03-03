@@ -11,10 +11,8 @@ import UIKit
 class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
+
     let imagePicker = UIImagePickerController()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,8 +74,12 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         dismissViewControllerAnimated(true, completion: nil)
         //    profileImageView.contentMode = .ScaleAspectFill
        // let editImage = info[UIImagePickerControllerEditedImage] as? UIImage
-        let editImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let editImage = UIImage(data: originalImage!.lowestQualityJPEGNSData)
+        
+        print("editImage Size - Original \(originalImage?.size)")
         print("editImage Size - Original \(editImage?.size)")
+        
         let size = CGSizeApplyAffineTransform(editImage!.size, CGAffineTransformMakeScale(0.3, 0.3))
         
         let hasAlpha = false
@@ -95,7 +97,11 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         self.appDelegate.doodleImage = scaledImage!
         self.appDelegate.gameChoosen = "Doodle"
         self.appDelegate.drawingReceived = GameItem(image: self.appDelegate.doodleImage, owner: appDelegate.connectionManager.myPeerId.displayName)
-        let sendDrawing: NSDictionary = ["drawing": self.appDelegate.doodleImage, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
+        
+    //    let sendDrawing: NSDictionary = ["drawing": self.appDelegate.doodleImage, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
+        
+        let sendDrawing: NSDictionary = ["drawing": scaledImage, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
+        
         self.appDelegate.connectionManager.sendImage(sendDrawing)
         
         self.performSegueWithIdentifier("drawingGame", sender: self)
@@ -106,4 +112,13 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+}
+
+extension UIImage {
+    var uncompressedPNGData: NSData      { return UIImagePNGRepresentation(self)!        }
+    var highestQualityJPEGNSData: NSData { return UIImageJPEGRepresentation(self, 1.0)!  }
+    var highQualityJPEGNSData: NSData    { return UIImageJPEGRepresentation(self, 0.75)! }
+    var mediumQualityJPEGNSData: NSData  { return UIImageJPEGRepresentation(self, 0.5)!  }
+    var lowQualityJPEGNSData: NSData     { return UIImageJPEGRepresentation(self, 0.25)! }
+    var lowestQualityJPEGNSData:NSData   { return UIImageJPEGRepresentation(self, 0.0)!  }
 }
