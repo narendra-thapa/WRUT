@@ -85,7 +85,7 @@ extension DrawingCollectionViewController : CSMDrawingSheetDelegate {
     
     func drawingReceived(manager : ConnectionManager, drawingReceived: UIImage, instances: String, owner: String) {
         NSOperationQueue.mainQueue().addOperationWithBlock {
-            print("drawing received: \(drawingReceived)")
+            print("drawing received : \(drawingReceived) and instance : \(instances)")
             if instances == "second" {
                 let gameItem = GameItem(image: drawingReceived, owner: owner)
                 self.appDelegate.drawingList.append(gameItem)

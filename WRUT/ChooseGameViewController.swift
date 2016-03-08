@@ -93,14 +93,14 @@ class ChooseGameViewController: UIViewController, UIImagePickerControllerDelegat
         print("editImage Size - Original \(scaledImage?.size)")
         
         UIGraphicsEndImageContext()
-        
+
         self.appDelegate.doodleImage = scaledImage!
         self.appDelegate.gameChoosen = "Doodle"
         self.appDelegate.drawingReceived = GameItem(image: self.appDelegate.doodleImage, owner: appDelegate.connectionManager.myPeerId.displayName)
         
     //    let sendDrawing: NSDictionary = ["drawing": self.appDelegate.doodleImage, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
         
-        let sendDrawing: NSDictionary = ["drawing": scaledImage, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
+        let sendDrawing: NSDictionary = ["drawing": editImage!, "first": "doodle", "sender":appDelegate.connectionManager.myPeerId.displayName]
         
         self.appDelegate.connectionManager.sendImage(sendDrawing)
         
